@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EcoWatt - AI-Powered Energy Management</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="AI-powered energy management platform for Zimbabwe's prepaid electricity system">
+    <meta name="theme-color" content="#0C6B3C">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="EcoWatt">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" type="image/x-icon" href="./assets/icons/favicon.ico">
+    <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- Fonts & External Resources -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    
+    <!-- Local Styles -->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#e6f5ef',
+                            100: '#c2e5d6',
+                            200: '#9dd6bd',
+                            300: '#78c6a3',
+                            400: '#53b68a',
+                            500: '#2fa671',
+                            600: '#0C6B3C',
+                            700: '#0a5730',
+                            800: '#074424',
+                            900: '#032e18',
+                        },
+                        secondary: {
+                            50: '#fff8e6',
+                            100: '#feefc0',
+                            200: '#fde599',
+                            300: '#fcdb72',
+                            400: '#fbd14b',
+                            500: '#F4A300',
+                            600: '#e19000',
+                            700: '#cb7d00',
+                            800: '#b56a00',
+                            900: '#a05700',
+                        },
+                        accent: '#E5F9E2',
+                        textPrimary: '#1A1A1A',
+                        textSecondary: '#555555',
+                        error: '#D32F2F',
+                        success: '#388E3C',
+                        darkBg: '#0F0F23',
+                        darkCard: '#1A1A2E',
+                        neonCyan: '#00FFFF',
+                        neonPink: '#FF0080',
+                        neonPurple: '#8000FF',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'fade-in': 'fadeIn 1s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'rotate-gradient': 'rotateGradient 3s linear infinite',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-aurora': 'linear-gradient(135deg, #00ffff 0%, #ff0080 50%, #8000ff 100%)',
+                    }
+                }
+            }
+        };
+
+        // Enhanced Dark Mode Detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+    </script>
+</head>
+
+<body class="font-inter text-white bg-darkBg transition-all duration-300">
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-logo">
+            <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+            </svg>
+        </div>
+        <h1 class="text-4xl font-bold gradient-text mb-4">EcoWatt</h1>
+        <p class="text-lg text-gray-300 mb-8">AI-Powered Energy Management</p>
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- PWA Install Prompt -->
+    <div id="installPrompt" class="fixed top-4 left-4 right-4 glass-morphism p-4 rounded-xl z-50 hidden">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-lg flex items-center justify-center mr-3">
+                    <i class="fas fa-mobile-alt text-white"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white">Install EcoWatt</h4>
+                    <p class="text-sm text-gray-300">Install the app for a better experience</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button id="installBtn" class="btn-primary text-sm px-4 py-2">Install</button>
+                <button id="dismissInstall" class="btn-secondary text-sm px-4 py-2">Later</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="max-w-md mx-auto relative min-h-screen">
+        
+        <!-- Onboarding Screens -->
+        <div id="onboarding-container" class="onboarding-screen">
+            <!-- Onboarding Slide 1 -->
+            <div class="onboarding-slide active flex flex-col h-screen p-6" data-aos="fade-up">
+                <div class="flex-1 flex flex-col items-center justify-center text-center">
+                    <lottie-player 
+                        src="https://assets5.lottiefiles.com/packages/lf20_qp1q7mct.json" 
+                        background="transparent" 
+                        speed="1" 
+                        style="width: 280px; height: 280px;" 
+                        loop 
+                        autoplay>
+                    </lottie-player>
+                    <h2 class="text-3xl font-bold gradient-text mb-4">Smart Energy Management</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">
+                        Take control of your electricity usage with AI-powered insights and real-time monitoring
+                    </p>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <div class="w-8 h-2 bg-gradient-aurora rounded-full"></div>
+                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
+                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
+                    </div>
+                    <button onclick="nextOnboardingSlide()" class="btn-primary px-6 py-3 rounded-full">
+                        Next <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Onboarding Slide 2 -->
+            <div class="onboarding-slide flex flex-col h-screen p-6" data-aos="fade-up">
+                <div class="flex-1 flex flex-col items-center justify-center text-center">
+                    <lottie-player 
+                        src="https://assets9.lottiefiles.com/packages/lf20_w51pcehl.json" 
+                        background="transparent" 
+                        speed="1" 
+                        style="width: 280px; height: 280px;" 
+                        loop 
+                        autoplay>
+                    </lottie-player>
+                    <h2 class="text-3xl font-bold gradient-text mb-4">AI-Powered Forecasting</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">
+                        Get accurate predictions of when your power will run out and optimize your energy consumption
+                    </p>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
+                        <div class="w-8 h-2 bg-gradient-aurora rounded-full"></div>
+                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="prevOnboardingSlide()" class="btn-secondary px-4 py-3 rounded-full">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button onclick="nextOnboardingSlide()" class="btn-primary px-6 py-3 rounded-full">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onboarding Slide 3 -->
+            <div class="onboarding-slide flex flex-col h-screen p-6" data-aos="fade-up">
+                <div class="flex-1 flex flex-col items-center justify-center text-center">
+                    <lottie-player 
+                        src="https://assets2.lottiefiles.com/packages/lf20_DMgKk1.json" 
+                        background="transparent" 
+                        speed="1" 
+                        style="width: 280px; height: 280px;" 
+                        loop 
+                        autoplay>
+                    </lottie-player>
+                    <h2 class="text-3xl font-bold gradient-text mb-4">Seamless Recharging</h2>
+                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">
+                        Top up your electricity instantly with mobile money integration and instant token delivery
+                    </p>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
+                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
+                        <div class="w-8 h-2 bg-gradient-aurora rounded-full"></div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button onclick="prevOnboardingSlide()" class="btn-secondary px-4 py-3 rounded-full">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button onclick="completeOnboarding()" class="btn-primary px-6 py-3 rounded-full">
+                            Get Started <i class="fas fa-rocket ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login/Registration Screen -->
+        <div id="auth-screen" class="screen min-h-screen flex flex-col hero-bg p-6" style="display: none;">
+            <div class="flex-1 flex flex-col justify-center">
+                <div class="text-center mb-8" data-aos="fade-down">
+                    <div class="splash-logo mx-auto mb-6">
+                        <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-4xl font-bold gradient-text mb-2">Welcome to EcoWatt</h1>
+                    <p class="text-lg text-gray-300">Smart energy management for Zimbabwe</p>
+                </div>
+
+                <div class="space-y-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="enhanced-card p-6">
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-300 mb-3">Phone Number</label>
+                            <div class="flex">
+                                <div class="bg-gray-800/50 border border-gray-600 border-r-0 rounded-l-xl px-4 flex items-center">
+                                    <span class="text-gray-300">+263</span>
+                                </div>
+                                <input type="tel" id="phone-input" class="enhanced-input rounded-l-none border-l-0" placeholder="77 123 4567">
+                            </div>
+                        </div>
+
+                        <button id="send-otp-btn" class="btn-primary w-full py-4 rounded-xl font-semibold text-lg">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Send Verification Code
+                        </button>
+
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-gray-400">
+                                By continuing, you agree to our 
+                                <a href="#" class="text-primary-400 hover:text-primary-300">Terms</a> and 
+                                <a href="#" class="text-primary-400 hover:text-primary-300">Privacy Policy</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center items-center gap-6 mt-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-globe text-primary-400"></i>
+                    <select class="bg-transparent text-gray-300 text-sm focus:outline-none">
+                        <option value="en">English</option>
+                        <option value="sn">Shona</option>
+                        <option value="nd">Ndebele</option>
+                    </select>
+                </div>
+                <div class="h-4 w-px bg-gray-600"></div>
+                <a href="#" class="text-sm text-gray-400 hover:text-primary-400">Help & Support</a>
+            </div>
+        </div>
+
+        <!-- OTP Verification Screen -->
+        <div id="otp-screen" class="screen min-h-screen flex flex-col p-6">
+            <div class="flex items-center mb-8" data-aos="fade-down">
+                <button onclick="showScreen('auth-screen')" class="w-10 h-10 glass-morphism rounded-xl flex items-center justify-center mr-4">
+                    <i class="fas fa-arrow-left text-primary-400"></i>
+                </button>
+                <h1 class="text-2xl font-bold text-white">Verify Your Number</h1>
+            </div>
+
+            <div class="flex-1 flex flex-col justify-center">
+                <div class="text-center mb-8" data-aos="fade-up">
+                    <div class="w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-mobile-alt text-2xl text-white"></i>
+                    </div>
+                    <h2 class="text-xl font-semibold text-white mb-2">Enter Verification Code</h2>
+                    <p class="text-gray-300">
+                        We sent a 4-digit code to <br>
+                        <strong>+263 77 123 4567</strong>
+                    </p>
+                </div>
+
+                <div class="enhanced-card p-8 mb-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex justify-center gap-4 mb-8">
+                        <input type="text" maxlength="1" class="otp-input w-14 h-16 text-center text-2xl font-bold rounded-xl border-2 border-gray-600 bg-gray-800/50 text-white focus:border-primary-400">
+                        <input type="text" maxlength="1" class="otp-input w-14 h-16 text-center text-2xl font-bold rounded-xl border-2 border-gray-600 bg-gray-800/50 text-white focus:border-primary-400">
+                        <input type="text" maxlength="1" class="otp-input w-14 h-16 text-center text-2xl font-bold rounded-xl border-2 border-gray-600 bg-gray-800/50 text-white focus:border-primary-400">
+                        <input type="text" maxlength="1" class="otp-input w-14 h-16 text-center text-2xl font-bold rounded-xl border-2 border-gray-600 bg-gray-800/50 text-white focus:border-primary-400">
+                    </div>
+
+                    <button id="verify-otp-btn" class="btn-primary w-full py-4 rounded-xl font-semibold text-lg">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Verify & Continue
+                    </button>
+                </div>
+
+                <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                    <p class="text-gray-400 mb-2">Didn't receive the code?</p>
+                    <button class="text-primary-400 font-semibold hover:text-primary-300">
+                        Resend Code (00:45)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Screen -->
+        <div id="home-screen" class="screen pb-20 pt-6" style="display: none;">
+            <!-- Enhanced Header -->
+            <header class="px-6 py-4 flex justify-between items-center mb-6" data-aos="fade-down">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white">EcoWatt</h1>
+                        <p class="text-sm text-gray-400">Good morning, User</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="connect-btn" class="btn-secondary px-3 py-2 text-sm rounded-lg">
+                        <i class="fas fa-bluetooth-b mr-1"></i>
+                        Connect
+                    </button>
+                    <button class="relative">
+                        <div class="w-10 h-10 glass-morphism rounded-xl flex items-center justify-center">
+                            <i class="fas fa-bell text-gray-300 text-lg"></i>
+                        </div>
+                        <span class="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-neonPink to-neonPurple rounded-full flex items-center justify-center text-xs font-bold animate-pulse-glow">3</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Enhanced Energy Balance Card -->
+            <div class="px-6 mb-6">
+                <div class="enhanced-card p-6" data-aos="fade-up">
+                    <div class="text-center mb-6">
+                        <h2 class="text-lg font-semibold text-gray-300 mb-2">Current Balance</h2>
+                        
+                        <!-- Enhanced SVG Energy Meter -->
+                        <div class="energy-meter my-6">
+                            <svg viewBox="0 0 200 200" class="w-full h-full">
+                                <defs>
+                                    <linearGradient id="meter-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#00FFFF"></stop>
+                                        <stop offset="50%" style="stop-color:#FF0080"></stop>
+                                        <stop offset="100%" style="stop-color:#8000FF"></stop>
+                                    </linearGradient>
+                                    <filter id="glow">
+                                        <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                        <feMerge> 
+                                            <feMergeNode in="coloredBlur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <circle class="meter-background" cx="100" cy="100" r="80" stroke-dasharray="502" stroke-dashoffset="0"></circle>
+                                <circle id="meter-progress" class="meter-progress" cx="100" cy="100" r="80" stroke-dasharray="502" stroke-dashoffset="377" filter="url(#glow)"></circle>
+                                
+                                <!-- Enhanced Value Display -->
+                                <text x="100" y="90" text-anchor="middle" font-size="28" font-weight="bold" fill="white" class="font-mono">8.42</text>
+                                <text x="100" y="110" text-anchor="middle" font-size="14" fill="#00FFFF">kWh</text>
+                                <text x="100" y="130" text-anchor="middle" font-size="12" fill="#888">remaining</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="flex items-center justify-center">
+                            <div class="px-4 py-2 bg-gradient-to-r from-secondary-500/20 to-secondary-600/20 rounded-full border border-secondary-500/30">
+                                <p class="text-secondary-400 font-semibold flex items-center">
+                                    <i class="fas fa-clock mr-2"></i> 
+                                    Est. <span id="days-left" class="mx-1 font-bold">3 days</span> remaining
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Quick Actions -->
+            <div class="px-6 mb-6">
+                <div class="flex gap-3">
+                    <button id="show-recharge-btn" class="btn-primary flex-1 py-4 rounded-xl font-semibold flex items-center justify-center" data-aos="fade-right">
+                        <i class="fas fa-bolt mr-2"></i>
+                        Recharge Now
+                    </button>
+                    <button id="emergency-credit-btn" class="btn-secondary px-4 py-4 rounded-xl" data-aos="fade-left">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enhanced Dashboard Cards -->
+            <div class="px-6 mb-6">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="enhanced-card p-4" data-aos="fade-up" data-aos-delay="100" data-metric="usage">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-sm font-semibold text-gray-300">Today's Usage</h3>
+                            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-white text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline mb-2">
+                            <span class="text-2xl font-bold text-white">1.2</span>
+                            <span class="text-sm text-gray-400 ml-1">kWh</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 35%"></div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">35% of daily average</p>
+                    </div>
+
+                    <div class="enhanced-card p-4" data-aos="fade-up" data-aos-delay="200" data-metric="budget">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-sm font-semibold text-gray-300">Monthly Budget</h3>
+                            <div class="w-8 h-8 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-wallet text-white text-sm"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-baseline mb-2">
+                            <span class="text-2xl font-bold text-white">$25</span>
+                            <span class="text-sm text-gray-400 ml-1">ZWL</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 70%"></div>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">$17.50 remaining</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Alert Section -->
+            <div class="px-6 mb-6">
+                <div class="enhanced-card bg-gradient-to-r from-secondary-500/20 to-orange-500/20 border-l-4 border-secondary-500 p-4" data-aos="fade-up">
+                    <div class="flex items-start">
+                        <div class="w-10 h-10 bg-secondary-500 rounded-xl flex items-center justify-center mr-3 animate-pulse-glow">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-secondary-300 mb-1">Low Balance Alert</h3>
+                            <p class="text-sm text-gray-300">
+                                Your current usage rate suggests power will run out in 3 days. Consider recharging soon or reducing consumption.
+                            </p>
+                            <button class="text-secondary-400 text-sm font-semibold mt-2 hover:text-secondary-300">
+                                View Recommendations →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced Quick Actions Grid -->
+            <div class="px-6 mb-6">
+                <h2 class="text-lg font-semibold text-white mb-4" data-aos="fade-up">Quick Actions</h2>
+                <div class="grid grid-cols-4 gap-3">
+                    <button id="show-forecast-btn" class="enhanced-card flex flex-col items-center py-4 px-2" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fas fa-chart-line text-white"></i>
+                        </div>
+                        <span class="text-xs text-center text-gray-300 font-medium">Forecast</span>
+                    </button>
+
+                    <button id="show-budget-btn" class="enhanced-card flex flex-col items-center py-4 px-2" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="w-12 h-12 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fas fa-wallet text-white"></i>
+                        </div>
+                        <span class="text-xs text-center text-gray-300 font-medium">Budget</span>
+                    </button>
+
+                    <button id="show-devices-btn" class="enhanced-card flex flex-col items-center py-4 px-2" data-aos="zoom-in" data-aos-delay="300">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fas fa-plug text-white"></i>
+                        </div>
+                        <span class="text-xs text-center text-gray-300 font-medium">Devices</span>
+                    </button>
+
+                    <button id="show-fault-btn" class="enhanced-card flex flex-col items-center py-4 px-2" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fas fa-exclamation-triangle text-white"></i>
+                        </div>
+                        <span class="text-xs text-center text-gray-300 font-medium">Report</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Enhanced Recent Activity -->
+            <div class="px-6 mb-8">
+                <div class="flex justify-between items-center mb-4" data-aos="fade-up">
+                    <h2 class="text-lg font-semibold text-white">Recent Activity</h2>
+                    <button class="text-sm text-primary-400 font-semibold hover:text-primary-300">View All</button>
+                </div>
+                <div class="enhanced-card divide-y divide-gray-700" data-aos="fade-up">
+                    <div class="p-4 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-3">
+                            <i class="fas fa-plus text-white text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-white">Token Recharge</p>
+                            <p class="text-xs text-gray-400">Jun 12, 2023 - 11:34 AM</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-green-400">+25.4 kWh</p>
+                            <p class="text-xs text-gray-400">$15.00</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 flex items-center">
+                        <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mr-3">
+                            <i class="fas fa-exclamation text-white text-sm"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-semibold text-white">High Usage Alert</p>
+                            <p class="text-xs text-gray-400">Jun 10, 2023 - 7:15 PM</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-orange-400">3.5 kWh</p>
+                            <p class="text-xs text-gray-400">Above average</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto glass-morphism border-t border-white/10 z-50">
+            <div class="px-4 py-2">
+                <div class="flex justify-between">
+                    <button id="nav-home" class="nav-item flex flex-col items-center py-3 px-4 text-primary-400 relative">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="fas fa-home text-lg"></i>
+                        </div>
+                        <span class="text-xs mt-1 font-medium">Home</span>
+                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-gradient-aurora rounded-t-full"></div>
+                    </button>
+
+                    <button id="nav-usage" class="nav-item flex flex-col items-center py-3 px-4 text-gray-400 hover:text-primary-400 transition-colors">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="fas fa-chart-line text-lg"></i>
+                        </div>
+                        <span class="text-xs mt-1 font-medium">Usage</span>
+                    </button>
+
+                    <button id="nav-budget" class="nav-item flex flex-col items-center py-3 px-4 text-gray-400 hover:text-primary-400 transition-colors">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="fas fa-wallet text-lg"></i>
+                        </div>
+                        <span class="text-xs mt-1 font-medium">Budget</span>
+                    </button>
+
+                    <button id="nav-profile" class="nav-item flex flex-col items-center py-3 px-4 text-gray-400 hover:text-primary-400 transition-colors">
+                        <div class="w-6 h-6 flex items-center justify-center">
+                            <i class="fas fa-user text-lg"></i>
+                        </div>
+                        <span class="text-xs mt-1 font-medium">Profile</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50"></div>
+
+    <!-- Scripts -->
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>

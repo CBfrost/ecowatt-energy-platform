@@ -1,0 +1,45 @@
+{
+  "name": "ecowatt-energy-platform",
+  "version": "2.0.0",
+  "description": "🌱 AI-Powered Energy Management Platform for Zimbabwe - Progressive Web App with mobile payments & smart meter integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -s . -l 3000",
+    "build": "npm run build:assets && npm run build:icons",
+    "build:assets": "mkdir -p dist && cp -r assets dist/ && cp *.html dist/ && cp *.json dist/ && cp sw.js dist/",
+    "build:icons": "node scripts/generate-icons.js",
+    "serve": "npx serve -s dist -l 3000",
+    "test": "npm run test:lighthouse && npm run test:pwa",
+    "test:lighthouse": "npx lighthouse http://localhost:3000 --output=json --output-path=./reports/lighthouse.json",
+    "test:pwa": "npx pwa-asset-generator assets/icons/logo.svg assets/icons/ --manifest manifest.json",
+    "deploy": "npm run build && npx gh-pages -d dist"
+  },
+  "keywords": [
+    "pwa",
+    "energy-management",
+    "zimbabwe",
+    "mobile-payments",
+    "ai-forecasting",
+    "smart-meters",
+    "prepaid-electricity"
+  ],
+  "author": "Panashe Matengambiri <panashefrost@icloud.com>",
+  "license": "PROPRIETARY",
+  "homepage": "https://cbfrost.github.io/ecowatt-energy-platform",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CBfrost/ecowatt-energy-platform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CBfrost/ecowatt-energy-platform/issues"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0",
+    "lighthouse": "^10.4.0",
+    "gh-pages": "^6.0.0",
+    "pwa-asset-generator": "^6.3.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
