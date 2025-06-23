@@ -4,545 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EcoWatt - AI-Powered Energy Management</title>
-    
-    <!-- PWA Meta Tags -->
-    <meta name="description" content="AI-powered energy management platform for Zimbabwe's prepaid electricity system">
+    <meta name="description" content="Professional energy management platform for Zimbabwe's prepaid electricity system">
     <meta name="theme-color" content="#0C6B3C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="EcoWatt">
-    
-    <!-- Favicon and Icons -->
     <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-    <link rel="apple-touch-icon" href="./favicon.svg">
     <link rel="manifest" href="./manifest.json">
     
-    <!-- Professional External Resources -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Professional External Resources with Fallbacks -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-    
-    <!-- Professional Icon System -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'inter': ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: { 500: '#2fa671', 600: '#0C6B3C' },
+                        secondary: { 400: '#fbbf24', 500: '#F4A300' },
+                        neonCyan: '#00FFFF', neonPink: '#FF0080', neonPurple: '#8000FF',
+                        darkBg: '#0F0F23', darkCard: '#1A1A2E'
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'shimmer': 'shimmer 2s linear infinite'
+                    },
+                    backgroundImage: {
+                        'gradient-aurora': 'linear-gradient(135deg, #00ffff 0%, #ff0080 50%, #8000ff 100%)',
+                        'gradient-mesh': 'radial-gradient(ellipse at top left, rgba(0, 255, 255, 0.1), transparent 50%), radial-gradient(ellipse at bottom right, rgba(255, 0, 128, 0.1), transparent 50%)'
+                    }
+                }
+            }
+        };
+    </script>
+
     <style>
-        /* Custom SVG Icons */
-        .icon {
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            fill: currentColor;
-            vertical-align: middle;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
-        /* Professional Icon Sprites */
+        /* Mobile-First Professional Styles */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 100%);
+            color: white; min-height: 100vh; overflow-x: hidden;
+            -webkit-font-smoothing: antialiased; font-size: 16px;
+        }
+
+        /* Professional Glass System */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover { transform: translateY(-4px); border-color: rgba(0, 255, 255, 0.3); }
+
+        /* Professional Icon System */
+        .icon { width: 1.25rem; height: 1.25rem; display: inline-block; }
         .icon-home { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-chart { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4zm2.5 2.25l-6-6 6-6v12z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-wallet { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-user { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 4V6C15 7.1 14.1 8 13 8H11C9.9 8 9 7.1 9 6V4L3 7V9H4V19H20V9H21Z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
+        .icon-chart { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
+        .icon-wallet { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
+        .icon-user { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
         .icon-bolt { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
         .icon-bell { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-bluetooth { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71L13.41 12l4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-phone { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
+        .icon-phone { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
         .icon-check { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
         .icon-arrow-right { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
         .icon-arrow-left { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
         .icon-clock { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
         .icon-warning { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-plus { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-rocket { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5L9 9H2L9 12l3 6.5L15 12l7-3H15l-3-6.5z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        
-        /* Icon sizes */
-        .icon-sm { width: 1rem; height: 1rem; }
-        .icon-md { width: 1.25rem; height: 1.25rem; }
-        .icon-lg { width: 1.5rem; height: 1.5rem; }
-        .icon-xl { width: 2rem; height: 2rem; }
-    </style>
-    
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
-                        'mono': ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        primary: {
-                            50: '#e6f5ef',
-                            100: '#c2e5d6',
-                            200: '#9dd6bd',
-                            300: '#78c6a3',
-                            400: '#53b68a',
-                            500: '#2fa671',
-                            600: '#0C6B3C',
-                            700: '#0a5730',
-                            800: '#074424',
-                            900: '#032e18',
-                        },
-                        secondary: {
-                            50: '#fff8e6',
-                            100: '#feefc0',
-                            200: '#fde599',
-                            300: '#fcdb72',
-                            400: '#fbd14b',
-                            500: '#F4A300',
-                            600: '#e19000',
-                            700: '#cb7d00',
-                            800: '#b56a00',
-                            900: '#a05700',
-                        },
-                        accent: '#E5F9E2',
-                        neonCyan: '#00FFFF',
-                        neonPink: '#FF0080',
-                        neonPurple: '#8000FF',
-                        darkBg: '#0F0F23',
-                        darkCard: '#1A1A2E',
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-                        'slide-up': 'slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
-                        'fade-in': 'fadeIn 1s ease-out',
-                        'bounce-gentle': 'bounceGentle 2s ease-in-out infinite',
-                        'shimmer': 'shimmer 2s linear infinite',
-                        'rotate-gradient': 'rotateGradient 3s linear infinite',
-                        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
-                    },
-                    backgroundImage: {
-                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                        'gradient-aurora': 'linear-gradient(135deg, #00ffff 0%, #ff0080 50%, #8000ff 100%)',
-                        'gradient-mesh': 'radial-gradient(ellipse at top left, rgba(0, 255, 255, 0.15), transparent 50%), radial-gradient(ellipse at top right, rgba(255, 0, 128, 0.15), transparent 50%), radial-gradient(ellipse at bottom, rgba(128, 0, 255, 0.15), transparent 50%)',
-                    },
-                    backdropBlur: {
-                        'xs': '2px',
-                    },
-                    boxShadow: {
-                        'glow': '0 0 20px rgba(0, 255, 255, 0.5)',
-                        'glow-lg': '0 0 40px rgba(0, 255, 255, 0.4)',
-                        'neon': '0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor',
-                    }
-                }
-            }
-        };
+        .icon-bluetooth { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71L13.41 12l4.3-4.29z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
 
-        // Enhanced Dark Mode Detection
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-        }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            if (event.matches) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-        });
-    </script>
-
-    <style>
-        /* Professional Custom Styles */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        
-        :root {
-            --primary-gradient: linear-gradient(135deg, #0C6B3C, #2fa671);
-            --secondary-gradient: linear-gradient(135deg, #F4A300, #e19000);
-            --neon-gradient: linear-gradient(135deg, #00FFFF, #FF0080, #8000FF);
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glow-cyan: rgba(0, 255, 255, 0.5);
-            --glow-pink: rgba(255, 0, 128, 0.5);
-        }
-
-        /* Enhanced Glassmorphism */
-        .glass-morphism {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .glass-card {
-            background: linear-gradient(145deg, 
-                rgba(255, 255, 255, 0.1),
-                rgba(255, 255, 255, 0.05)
-            );
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--neon-gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .glass-card:hover::before {
-            opacity: 1;
-        }
-
-        /* Advanced Button System */
+        /* Button System */
         .btn-glow {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #0C6B3C, #2fa671);
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
+        .btn-glow:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(12, 107, 60, 0.4); }
 
-        .btn-glow::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
+        /* Input System */
+        .input-glow { transition: all 0.3s ease; }
+        .input-glow:focus { box-shadow: 0 0 0 2px #00FFFF; border-color: #00FFFF; outline: none; }
 
-        .btn-glow:hover::before {
-            left: 100%;
-        }
-
-        .btn-glow:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(12, 107, 60, 0.4), 0 0 20px var(--glow-cyan);
-        }
-
-        /* Professional Input System */
-        .input-glow {
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .input-glow:focus {
-            box-shadow: 0 0 0 2px var(--glow-cyan), 0 0 20px rgba(0, 255, 255, 0.2);
-            border-color: #00FFFF;
-        }
-
-        /* Energy Meter Enhancements */
-        .energy-meter-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .energy-meter-glow {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
-            animation: glow-pulse 3s ease-in-out infinite;
-        }
-
-        /* Advanced Animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
+        /* Animations */
         @keyframes pulseGlow {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 0 0 20px var(--glow-cyan);
-            }
-            50% { 
-                transform: scale(1.05);
-                box-shadow: 0 0 30px var(--glow-cyan), 0 0 40px var(--glow-pink);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Screen System */
+        .screen { display: none; }
+        .screen.active { display: block; animation: slideUp 0.6s ease-out; }
+        .onboarding-screen { display: none; }
+        .onboarding-screen.active { display: flex; }
+        .onboarding-slide { display: none; }
+        .onboarding-slide.active { display: flex; }
+
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 50%, #0C6B3C 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 9999; transition: opacity 0.8s ease-out;
+        }
+        .splash-screen.fade-out { opacity: 0; pointer-events: none; }
+        .splash-logo {
+            width: 120px; height: 120px; border-radius: 50%;
+            background: linear-gradient(135deg, #00FFFF, #FF0080, #8000FF);
+            display: flex; align-items: center; justify-content: center;
+            animation: pulseGlow 2s infinite; margin-bottom: 2rem;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Progress Bar */
+        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, #00FFFF, #FF0080, #8000FF);
+            border-radius: 4px; transition: width 0.8s ease; position: relative;
         }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        @keyframes rotateGradient {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
-        }
-
-        @keyframes bounceGentle {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-
-        /* Progress Bar Enhancements */
-        .progress-enhanced {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-enhanced::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        .progress-fill::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             animation: shimmer 2s infinite;
+        }
+
+        /* Navigation */
+        .nav-item { transition: all 0.3s ease; position: relative; }
+        .nav-item.active { color: #2fa671; }
+        .nav-item.active::after {
+            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+            width: 24px; height: 3px; background: linear-gradient(90deg, #00FFFF, #FF0080);
+            border-radius: 2px;
         }
 
         /* Toast System */
         .toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
+            position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px);
             background: linear-gradient(135deg, rgba(12, 107, 60, 0.95), rgba(47, 166, 113, 0.95));
-            backdrop-filter: blur(20px);
-            color: white;
-            padding: 16px 24px;
-            border-radius: 16px;
-            font-weight: 600;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-cyan);
-            z-index: 1000;
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(20px); color: white; padding: 16px 24px; border-radius: 16px;
+            font-weight: 600; z-index: 1000; opacity: 0; transition: all 0.4s ease;
+            border: 1px solid rgba(0, 255, 255, 0.3); max-width: 90vw;
         }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
         .toast.success { background: linear-gradient(135deg, rgba(56, 142, 60, 0.95), rgba(76, 175, 80, 0.95)); }
         .toast.error { background: linear-gradient(135deg, rgba(211, 47, 47, 0.95), rgba(244, 67, 54, 0.95)); }
-        .toast.warning { background: linear-gradient(135deg, rgba(244, 163, 0, 0.95), rgba(255, 152, 0, 0.95)); }
-
-        /* Navigation Enhancements */
-        .nav-item {
-            position: relative;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .nav-item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 3px;
-            background: var(--neon-gradient);
-            border-radius: 2px;
-            transition: width 0.3s ease;
-        }
-
-        .nav-item.active::after {
-            width: 24px;
-        }
-
-        .nav-item:hover {
-            transform: translateY(-2px);
-        }
 
         /* Mobile Optimizations */
         @media (max-width: 768px) {
-            .glass-card {
-                margin: 0 4px;
-            }
-            
-            .btn-glow {
-                min-height: 48px;
-            }
-            
-            .input-glow {
-                font-size: 16px; /* Prevent zoom on iOS */
-            }
+            .splash-logo { width: 100px; height: 100px; }
+            .glass-card { margin: 0 4px; }
         }
 
-        /* Enhanced Screen Transitions */
-        .screen {
-            opacity: 0;
-            transform: translateX(100%);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        /* Desktop Optimizations */
+        @media (min-width: 769px) {
+            #app { max-width: 400px; margin: 0 auto; }
+            .splash-logo { width: 140px; height: 140px; }
         }
 
-        .screen.active {
-            opacity: 1;
-            transform: translateX(0);
-            position: relative;
-        }
-
-        .screen.slide-left {
-            transform: translateX(-100%);
-        }
-
-        /* Splash Screen Professional */
-        .splash-screen {
-            background: linear-gradient(135deg, 
-                #0F0F23 0%, 
-                #1A1A2E 25%, 
-                #0C6B3C 75%, 
-                #2fa671 100%
-            );
-            background-size: 400% 400%;
-            animation: rotateGradient 8s ease infinite;
-        }
-
-        .splash-logo {
-            background: var(--neon-gradient);
-            background-size: 300% 300%;
-            animation: rotateGradient 3s linear infinite, pulseGlow 2s ease-in-out infinite;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--neon-gradient);
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #00FFFF, #FF0080);
-        }
-
-        /* PWA Installation Prompt */
-        .install-prompt {
-            background: linear-gradient(135deg, 
-                rgba(12, 107, 60, 0.95), 
-                rgba(47, 166, 113, 0.95)
-            );
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-cyan);
-        }
-
-        /* Loading States */
-        .loading-skeleton {
-            background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-
-        /* Chart Enhancements */
-        .chart-container {
-            position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Notification Badge */
-        .notification-badge {
-            background: var(--neon-gradient);
-            animation: glow-pulse 2s ease-in-out infinite;
-            box-shadow: 0 0 10px var(--glow-pink);
-        }
-
-        /* Enhanced Card Hover Effects */
-        .card-hover-effect {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .card-hover-effect:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.15), 0 0 30px rgba(255, 0, 128, 0.1);
+        /* Large Desktop */
+        @media (min-width: 1200px) {
+            #app { max-width: 450px; }
         }
     </style>
 </head>
 
-<body class="font-inter text-white bg-darkBg transition-all duration-300 overflow-x-hidden">
+<body class="font-inter">
     <!-- Splash Screen -->
-    <div id="splashScreen" class="splash-screen fixed inset-0 flex flex-col items-center justify-center z-50">
-        <div class="splash-logo w-32 h-32 rounded-full flex items-center justify-content-center mb-8 relative">
-            <div class="energy-meter-glow"></div>
-            <svg class="w-16 h-16 text-white relative z-10" fill="currentColor" viewBox="0 0 20 20">
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-logo">
+            <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
             </svg>
         </div>
-        <h1 class="text-5xl font-bold mb-4 bg-gradient-aurora bg-clip-text text-transparent animate-pulse-glow">EcoWatt</h1>
-        <p class="text-xl text-gray-300 mb-8 animate-fade-in">AI-Powered Energy Management</p>
-        <div class="w-8 h-8 border-4 border-neonCyan border-t-transparent rounded-full animate-spin"></div>
-        <p class="text-sm text-gray-400 mt-4 animate-bounce-gentle">Initializing smart systems...</p>
-    </div>
-
-    <!-- PWA Install Prompt -->
-    <div id="installPrompt" class="install-prompt fixed top-4 left-4 right-4 p-4 rounded-xl z-40 hidden max-w-md mx-auto">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center">
-                <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center mr-3 animate-pulse-glow">
-                    <span class="icon icon-bolt icon-lg text-white"></span>
-                </div>
-                <div>
-                    <h4 class="font-bold text-white">Install EcoWatt</h4>
-                    <p class="text-sm text-gray-300">Get the full app experience</p>
-                </div>
-            </div>
-            <div class="flex gap-2">
-                <button id="installBtn" class="btn-glow bg-gradient-to-r from-primary-500 to-primary-600 text-white text-sm px-4 py-2 rounded-lg font-semibold">Install</button>
-                <button id="dismissInstall" class="glass-morphism text-sm px-4 py-2 rounded-lg text-gray-300">Later</button>
-            </div>
-        </div>
+        <h1 class="text-4xl font-bold mb-4 bg-gradient-aurora bg-clip-text text-transparent">EcoWatt</h1>
+        <p class="text-lg text-gray-300 mb-8">AI-Powered Energy Management</p>
+        <div class="w-6 h-6 border-3 border-neonCyan border-t-transparent rounded-full animate-spin"></div>
     </div>
 
     <!-- Main App Container -->
     <div id="app" class="max-w-md mx-auto relative min-h-screen bg-gradient-mesh">
         
         <!-- Onboarding Screens -->
-        <div id="onboarding-container" class="onboarding-screen min-h-screen hidden">
-            <!-- Onboarding Slide 1 -->
-            <div class="onboarding-slide active flex flex-col h-screen p-6" data-aos="fade-up">
+        <div id="onboarding-container" class="onboarding-screen min-h-screen">
+            <!-- Slide 1 -->
+            <div class="onboarding-slide active flex flex-col h-screen p-6">
                 <div class="flex-1 flex flex-col items-center justify-center text-center">
-                    <lottie-player 
-                        src="https://assets5.lottiefiles.com/packages/lf20_qp1q7mct.json" 
-                        background="transparent" 
-                        speed="1" 
-                        style="width: 320px; height: 320px;" 
-                        loop 
-                        autoplay>
-                    </lottie-player>
+                    <div class="w-64 h-64 mb-8 flex items-center justify-center text-8xl animate-bounce">📱</div>
                     <h2 class="text-3xl font-bold bg-gradient-aurora bg-clip-text text-transparent mb-4">Smart Energy Management</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">
-                        Take control of your electricity usage with AI-powered insights and real-time monitoring designed for Zimbabwe
-                    </p>
+                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">Take control of your electricity usage with AI-powered insights for Zimbabwe</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <div class="flex space-x-2">
@@ -550,27 +205,18 @@
                         <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
                         <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
                     </div>
-                    <button onclick="nextOnboardingSlide()" class="btn-glow bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-full font-semibold flex items-center">
-                        Next <span class="icon icon-arrow-right icon-sm ml-2"></span>
+                    <button onclick="nextOnboardingSlide()" class="btn-glow text-white px-6 py-3 rounded-full font-semibold flex items-center">
+                        Next <span class="icon icon-arrow-right ml-2"></span>
                     </button>
                 </div>
             </div>
 
-            <!-- Onboarding Slide 2 -->
-            <div class="onboarding-slide flex flex-col h-screen p-6" data-aos="fade-up">
+            <!-- Slide 2 -->
+            <div class="onboarding-slide flex flex-col h-screen p-6">
                 <div class="flex-1 flex flex-col items-center justify-center text-center">
-                    <lottie-player 
-                        src="https://assets9.lottiefiles.com/packages/lf20_w51pcehl.json" 
-                        background="transparent" 
-                        speed="1" 
-                        style="width: 320px; height: 320px;" 
-                        loop 
-                        autoplay>
-                    </lottie-player>
+                    <div class="w-64 h-64 mb-8 flex items-center justify-center text-8xl animate-pulse">🤖</div>
                     <h2 class="text-3xl font-bold bg-gradient-aurora bg-clip-text text-transparent mb-4">AI-Powered Forecasting</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">
-                        Get accurate predictions of when your power will run out and optimize consumption with machine learning
-                    </p>
+                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">Get accurate predictions of when your power will run out with machine learning</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <div class="flex space-x-2">
@@ -579,31 +225,22 @@
                         <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
                     </div>
                     <div class="flex gap-3">
-                        <button onclick="prevOnboardingSlide()" class="glass-morphism px-4 py-3 rounded-full font-semibold flex items-center text-gray-300">
-                            <span class="icon icon-arrow-left icon-sm mr-2"></span> Back
+                        <button onclick="prevOnboardingSlide()" class="glass-card px-4 py-3 rounded-full font-semibold flex items-center text-gray-300">
+                            <span class="icon icon-arrow-left mr-2"></span> Back
                         </button>
-                        <button onclick="nextOnboardingSlide()" class="btn-glow bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-full font-semibold flex items-center">
-                            Next <span class="icon icon-arrow-right icon-sm ml-2"></span>
+                        <button onclick="nextOnboardingSlide()" class="btn-glow text-white px-6 py-3 rounded-full font-semibold flex items-center">
+                            Next <span class="icon icon-arrow-right ml-2"></span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Onboarding Slide 3 -->
-            <div class="onboarding-slide flex flex-col h-screen p-6" data-aos="fade-up">
+            <!-- Slide 3 -->
+            <div class="onboarding-slide flex flex-col h-screen p-6">
                 <div class="flex-1 flex flex-col items-center justify-center text-center">
-                    <lottie-player 
-                        src="https://assets2.lottiefiles.com/packages/lf20_DMgKk1.json" 
-                        background="transparent" 
-                        speed="1" 
-                        style="width: 320px; height: 320px;" 
-                        loop 
-                        autoplay>
-                    </lottie-player>
+                    <div class="w-64 h-64 mb-8 flex items-center justify-center text-8xl animate-bounce">💳</div>
                     <h2 class="text-3xl font-bold bg-gradient-aurora bg-clip-text text-transparent mb-4">Seamless Recharging</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">
-                        Top up instantly with EcoCash & OneMoney integration, smart meter connectivity, and instant token delivery
-                    </p>
+                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">Top up instantly with EcoCash & OneMoney integration and instant token delivery</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <div class="flex space-x-2">
@@ -612,24 +249,23 @@
                         <div class="w-8 h-2 bg-gradient-aurora rounded-full"></div>
                     </div>
                     <div class="flex gap-3">
-                        <button onclick="prevOnboardingSlide()" class="glass-morphism px-4 py-3 rounded-full font-semibold flex items-center text-gray-300">
-                            <span class="icon icon-arrow-left icon-sm mr-2"></span> Back
+                        <button onclick="prevOnboardingSlide()" class="glass-card px-4 py-3 rounded-full font-semibold flex items-center text-gray-300">
+                            <span class="icon icon-arrow-left mr-2"></span> Back
                         </button>
-                        <button onclick="completeOnboarding()" class="btn-glow bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-full font-semibold flex items-center">
-                            Get Started <span class="icon icon-rocket icon-sm ml-2"></span>
+                        <button onclick="completeOnboarding()" class="btn-glow text-white px-6 py-3 rounded-full font-semibold flex items-center">
+                            Get Started <span class="icon icon-check ml-2"></span>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Login/Registration Screen -->
-        <div id="auth-screen" class="screen min-h-screen flex flex-col hero-bg p-6">
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen min-h-screen flex flex-col p-6">
             <div class="flex-1 flex flex-col justify-center">
-                <div class="text-center mb-8" data-aos="fade-down">
-                    <div class="splash-logo w-20 h-20 mx-auto mb-6 relative">
-                        <div class="energy-meter-glow"></div>
-                        <svg class="w-10 h-10 text-white relative z-10" fill="currentColor" viewBox="0 0 20 20">
+                <div class="text-center mb-8">
+                    <div class="splash-logo w-20 h-20 mx-auto mb-6">
+                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
                         </svg>
                     </div>
@@ -637,98 +273,66 @@
                     <p class="text-lg text-gray-300">Smart energy management for Zimbabwe</p>
                 </div>
 
-                <div class="space-y-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="glass-card p-6 rounded-2xl card-hover-effect">
-                        <div class="mb-6">
-                            <label class="block text-sm font-semibold text-gray-300 mb-3">Phone Number</label>
-                            <div class="flex">
-                                <div class="glass-morphism border-r-0 rounded-l-xl px-4 flex items-center">
-                                    <span class="text-gray-300 font-mono">+263</span>
-                                </div>
-                                <input type="tel" id="phone-input" class="input-glow glass-morphism rounded-l-none border-l-0 flex-1 px-4 py-4 text-white placeholder-gray-400 font-mono" placeholder="77 123 4567">
+                <div class="glass-card p-6 rounded-2xl mb-6">
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-300 mb-3">Phone Number</label>
+                        <div class="flex">
+                            <div class="glass-card border-r-0 rounded-l-xl px-4 flex items-center">
+                                <span class="text-gray-300 font-mono">+263</span>
                             </div>
-                        </div>
-
-                        <button id="send-otp-btn" class="btn-glow bg-gradient-to-r from-primary-500 to-primary-600 text-white w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center">
-                            <span class="icon icon-phone icon-md mr-2"></span>
-                            Send Verification Code
-                        </button>
-
-                        <div class="mt-6 text-center">
-                            <p class="text-sm text-gray-400">
-                                By continuing, you agree to our 
-                                <a href="#" class="text-primary-400 hover:text-primary-300 underline">Terms</a> and 
-                                <a href="#" class="text-primary-400 hover:text-primary-300 underline">Privacy Policy</a>
-                            </p>
+                            <input type="tel" id="phone-input" class="input-glow glass-card rounded-l-none border-l-0 flex-1 px-4 py-4 text-white placeholder-gray-400 font-mono" placeholder="77 123 4567">
                         </div>
                     </div>
+                    <button id="send-otp-btn" class="btn-glow text-white w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center">
+                        <span class="icon icon-phone mr-2"></span> Send Verification Code
+                    </button>
                 </div>
-            </div>
-
-            <div class="flex justify-center items-center gap-6 mt-6" data-aos="fade-up" data-aos-delay="400">
-                <div class="flex items-center gap-2">
-                    <span class="text-primary-400 text-xl">🌐</span>
-                    <select class="bg-transparent text-gray-300 text-sm focus:outline-none">
-                        <option value="en">English</option>
-                        <option value="sn">Shona</option>
-                        <option value="nd">Ndebele</option>
-                    </select>
-                </div>
-                <div class="h-4 w-px bg-gray-600"></div>
-                <a href="#" class="text-sm text-gray-400 hover:text-primary-400">Help & Support</a>
             </div>
         </div>
 
-        <!-- OTP Verification Screen -->
+        <!-- OTP Screen -->
         <div id="otp-screen" class="screen min-h-screen flex flex-col p-6">
-            <div class="flex items-center mb-8" data-aos="fade-down">
-                <button onclick="showScreen('auth-screen')" class="glass-morphism w-12 h-12 rounded-xl flex items-center justify-center mr-4 hover:bg-white/10 transition-all">
-                    <span class="icon icon-arrow-left icon-md text-primary-400"></span>
+            <div class="flex items-center mb-8">
+                <button onclick="showScreen('auth-screen')" class="glass-card w-12 h-12 rounded-xl flex items-center justify-center mr-4">
+                    <span class="icon icon-arrow-left text-primary-500"></span>
                 </button>
                 <h1 class="text-2xl font-bold text-white">Verify Your Number</h1>
             </div>
 
             <div class="flex-1 flex flex-col justify-center">
-                <div class="text-center mb-8" data-aos="fade-up">
+                <div class="text-center mb-8">
                     <div class="w-24 h-24 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-glow">
-                        <span class="icon icon-phone icon-xl text-white"></span>
+                        <span class="icon icon-phone text-white" style="width: 2rem; height: 2rem;"></span>
                     </div>
                     <h2 class="text-xl font-semibold text-white mb-2">Enter Verification Code</h2>
-                    <p class="text-gray-300">
-                        We sent a 4-digit code to <br>
-                        <strong class="text-primary-400">+263 77 123 4567</strong>
-                    </p>
+                    <p class="text-gray-300">We sent a 4-digit code to <br><strong class="text-primary-400">+263 77 123 4567</strong></p>
                 </div>
 
-                <div class="glass-card p-8 mb-8 rounded-2xl card-hover-effect" data-aos="fade-up" data-aos-delay="200">
+                <div class="glass-card p-8 mb-8 rounded-2xl">
                     <div class="flex justify-center gap-4 mb-8">
-                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-morphism text-white focus:border-neonCyan input-glow font-mono">
-                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-morphism text-white focus:border-neonCyan input-glow font-mono">
-                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-morphism text-white focus:border-neonCyan input-glow font-mono">
-                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-morphism text-white focus:border-neonCyan input-glow font-mono">
+                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-glow font-mono">
+                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-glow font-mono">
+                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-glow font-mono">
+                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-glow font-mono">
                     </div>
-
-                    <button id="verify-otp-btn" class="btn-glow bg-gradient-to-r from-primary-500 to-primary-600 text-white w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center">
-                        <span class="icon icon-check icon-md mr-2"></span>
-                        Verify & Continue
+                    <button id="verify-otp-btn" class="btn-glow text-white w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center">
+                        <span class="icon icon-check mr-2"></span> Verify & Continue
                     </button>
                 </div>
 
-                <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+                <div class="text-center">
                     <p class="text-gray-400 mb-2">Didn't receive the code?</p>
-                    <button class="text-primary-400 font-semibold hover:text-primary-300 transition-colors">
-                        Resend Code (<span id="resend-timer">00:45</span>)
-                    </button>
+                    <button class="text-primary-400 font-semibold hover:text-primary-300">Resend Code (00:45)</button>
                 </div>
             </div>
         </div>
 
-        <!-- Main Dashboard Screen -->
+        <!-- Home Screen -->
         <div id="home-screen" class="screen pb-24 pt-6">
-            <!-- Enhanced Header -->
-            <header class="px-6 py-4 flex justify-between items-center mb-6" data-aos="fade-down">
+            <!-- Header -->
+            <header class="px-6 py-4 flex justify-between items-center mb-6">
                 <div class="flex items-center">
-                    <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-4 shadow-lg animate-pulse-glow">
+                    <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-4 animate-pulse-glow">
                         <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
                         </svg>
@@ -739,85 +343,54 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button id="connect-btn" class="glass-morphism px-3 py-2 text-sm rounded-lg font-semibold text-gray-300 hover:text-primary-400 transition-all flex items-center">
-                        <span class="icon icon-bluetooth icon-sm mr-1"></span>
-                        Connect
+                    <button id="connect-btn" class="glass-card px-3 py-2 text-sm rounded-lg font-semibold text-gray-300 flex items-center">
+                        <span class="icon icon-bluetooth mr-1" style="width: 1rem; height: 1rem;"></span> Connect
                     </button>
                     <button class="relative">
-                        <div class="glass-morphism w-12 h-12 rounded-xl flex items-center justify-center hover:bg-white/10 transition-all">
-                            <span class="icon icon-bell icon-md text-gray-300"></span>
+                        <div class="glass-card w-12 h-12 rounded-xl flex items-center justify-center">
+                            <span class="icon icon-bell text-gray-300"></span>
                         </div>
-                        <span class="notification-badge absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white">3</span>
+                        <span class="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-neonPink to-neonPurple rounded-full flex items-center justify-center text-xs font-bold text-white animate-pulse-glow">3</span>
                     </button>
                 </div>
             </header>
 
-            <!-- Enhanced Energy Balance Card -->
+            <!-- Energy Balance Card -->
             <div class="px-6 mb-6">
-                <div class="glass-card p-6 rounded-2xl card-hover-effect" data-aos="fade-up">
+                <div class="glass-card p-6 rounded-2xl">
                     <div class="text-center mb-6">
                         <h2 class="text-lg font-semibold text-gray-300 mb-2">Current Balance</h2>
                         
-                        <!-- Enhanced Energy Meter with Advanced Animation -->
-                        <div class="energy-meter-container my-8">
-                            <div class="energy-meter-glow"></div>
+                        <!-- Energy Meter -->
+                        <div class="my-8 relative flex items-center justify-center">
                             <svg viewBox="0 0 200 200" class="w-52 h-52">
                                 <defs>
                                     <linearGradient id="meter-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" style="stop-color:#00FFFF">
-                                            <animate attributeName="stop-color" values="#00FFFF;#FF0080;#8000FF;#00FFFF" dur="4s" repeatCount="indefinite"/>
-                                        </stop>
-                                        <stop offset="50%" style="stop-color:#FF0080">
-                                            <animate attributeName="stop-color" values="#FF0080;#8000FF;#00FFFF;#FF0080" dur="4s" repeatCount="indefinite"/>
-                                        </stop>
-                                        <stop offset="100%" style="stop-color:#8000FF">
-                                            <animate attributeName="stop-color" values="#8000FF;#00FFFF;#FF0080;#8000FF" dur="4s" repeatCount="indefinite"/>
-                                        </stop>
+                                        <stop offset="0%" style="stop-color:#00FFFF"></stop>
+                                        <stop offset="50%" style="stop-color:#FF0080"></stop>
+                                        <stop offset="100%" style="stop-color:#8000FF"></stop>
                                     </linearGradient>
-                                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <filter id="glow">
                                         <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                                        <feMerge> 
-                                            <feMergeNode in="coloredBlur"/>
-                                            <feMergeNode in="SourceGraphic"/>
-                                        </feMerge>
+                                        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
                                     </filter>
                                 </defs>
-                                <circle cx="100" cy="100" r="85" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none" stroke-dasharray="534" stroke-dashoffset="0"></circle>
+                                <circle cx="100" cy="100" r="85" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none" stroke-dasharray="534"></circle>
                                 <circle id="meter-progress" cx="100" cy="100" r="85" stroke="url(#meter-gradient)" stroke-width="8" fill="none" 
                                         stroke-dasharray="534" stroke-dashoffset="400" transform="rotate(-90 100 100)" 
-                                        stroke-linecap="round" filter="url(#glow)">
-                                    <animate attributeName="stroke-dashoffset" values="534;400;534" dur="6s" repeatCount="indefinite"/>
-                                </circle>
+                                        stroke-linecap="round" filter="url(#glow)"></circle>
                                 
-                                <!-- Enhanced Value Display -->
-                                <text x="100" y="85" text-anchor="middle" font-size="32" font-weight="bold" fill="white" class="font-mono">
-                                    8.42
-                                    <animate attributeName="fill" values="white;#00FFFF;white" dur="3s" repeatCount="indefinite"/>
-                                </text>
-                                <text x="100" y="105" text-anchor="middle" font-size="14" fill="#00FFFF" class="font-semibold">kWh</text>
+                                <text x="100" y="85" text-anchor="middle" font-size="32" font-weight="bold" fill="white" font-family="monospace">8.42</text>
+                                <text x="100" y="105" text-anchor="middle" font-size="14" fill="#00FFFF">kWh</text>
                                 <text x="100" y="125" text-anchor="middle" font-size="12" fill="#888">remaining</text>
-                                
-                                <!-- Animated Particles -->
-                                <circle r="2" fill="#00FFFF" opacity="0.8">
-                                    <animateMotion dur="8s" repeatCount="indefinite">
-                                        <path d="M 100,15 A 85,85 0 1,1 99,15"/>
-                                    </animateMotion>
-                                    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
-                                </circle>
-                                <circle r="1.5" fill="#FF0080" opacity="0.6">
-                                    <animateMotion dur="12s" repeatCount="indefinite">
-                                        <path d="M 100,15 A 85,85 0 1,0 99,15"/>
-                                    </animateMotion>
-                                    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="3s" repeatCount="indefinite"/>
-                                </circle>
                             </svg>
                         </div>
                         
                         <div class="flex items-center justify-center">
-                            <div class="glass-morphism px-4 py-2 rounded-full border border-secondary-500/30">
+                            <div class="glass-card px-4 py-2 rounded-full border border-secondary-500/30">
                                 <p class="text-secondary-400 font-semibold flex items-center">
-                                    <span class="icon icon-clock icon-sm mr-2"></span> 
-                                    Est. <span id="days-left" class="mx-1 font-bold text-secondary-300">3 days</span> remaining
+                                    <span class="icon icon-clock mr-2" style="width: 1rem; height: 1rem;"></span> 
+                                    Est. <span class="mx-1 font-bold text-secondary-300">3 days</span> remaining
                                 </p>
                             </div>
                         </div>
@@ -825,179 +398,126 @@
                 </div>
             </div>
 
-            <!-- Enhanced Quick Actions -->
+            <!-- Quick Actions -->
             <div class="px-6 mb-6">
                 <div class="flex gap-3">
-                    <button id="show-recharge-btn" class="btn-glow bg-gradient-to-r from-primary-500 to-primary-600 text-white flex-1 py-4 rounded-xl font-semibold flex items-center justify-center" data-aos="fade-right">
-                        <span class="icon icon-bolt icon-md mr-2"></span>
-                        Recharge Now
+                    <button id="show-recharge-btn" class="btn-glow text-white flex-1 py-4 rounded-xl font-semibold flex items-center justify-center">
+                        <span class="icon icon-bolt mr-2"></span> Recharge Now
                     </button>
-                    <button id="emergency-credit-btn" class="glass-morphism px-4 py-4 rounded-xl hover:bg-red-500/20 transition-all" data-aos="fade-left">
-                        <span class="icon icon-warning icon-md text-red-400"></span>
+                    <button id="emergency-credit-btn" class="glass-card px-4 py-4 rounded-xl border-red-500/30 hover:bg-red-500/20">
+                        <span class="icon icon-warning text-red-400"></span>
                     </button>
                 </div>
             </div>
 
-            <!-- Enhanced Dashboard Cards -->
+            <!-- Dashboard Cards -->
             <div class="px-6 mb-6">
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="glass-card p-4 rounded-xl card-hover-effect" data-aos="fade-up" data-aos-delay="100" data-metric="usage">
+                    <div class="glass-card p-4 rounded-xl">
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="text-sm font-semibold text-gray-300">Today's Usage</h3>
                             <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                                <span class="icon icon-chart icon-md text-white"></span>
+                                <span class="icon icon-chart text-white"></span>
                             </div>
                         </div>
                         <div class="flex items-baseline mb-2">
                             <span class="text-2xl font-bold text-white font-mono">1.2</span>
                             <span class="text-sm text-gray-400 ml-1">kWh</span>
                         </div>
-                        <div class="progress-enhanced bg-gray-800 rounded-full h-2 overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full transition-all duration-1000 ease-out" style="width: 35%"></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 35%"></div>
                         </div>
                         <p class="text-xs text-gray-400 mt-2">35% of daily average</p>
                     </div>
 
-                    <div class="glass-card p-4 rounded-xl card-hover-effect" data-aos="fade-up" data-aos-delay="200" data-metric="budget">
+                    <div class="glass-card p-4 rounded-xl">
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="text-sm font-semibold text-gray-300">Monthly Budget</h3>
                             <div class="w-10 h-10 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-lg flex items-center justify-center">
-                                <span class="icon icon-wallet icon-md text-white"></span>
+                                <span class="icon icon-wallet text-white"></span>
                             </div>
                         </div>
                         <div class="flex items-baseline mb-2">
                             <span class="text-2xl font-bold text-white font-mono">$25</span>
                             <span class="text-sm text-gray-400 ml-1">ZWL</span>
                         </div>
-                        <div class="progress-enhanced bg-gray-800 rounded-full h-2 overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-secondary-500 to-yellow-400 rounded-full transition-all duration-1000 ease-out" style="width: 70%"></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 70%"></div>
                         </div>
                         <p class="text-xs text-gray-400 mt-2">$17.50 remaining</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Enhanced Alert Section -->
+            <!-- Alert Section -->
             <div class="px-6 mb-6">
-                <div class="glass-card bg-gradient-to-r from-secondary-500/20 to-orange-500/20 border-l-4 border-secondary-500 p-4 rounded-xl card-hover-effect" data-aos="fade-up">
+                <div class="glass-card bg-gradient-to-r from-secondary-500/20 to-orange-500/20 border-l-4 border-secondary-500 p-4 rounded-xl">
                     <div class="flex items-start">
                         <div class="w-12 h-12 bg-secondary-500 rounded-xl flex items-center justify-center mr-3 animate-pulse-glow">
-                            <span class="icon icon-warning icon-md text-white"></span>
+                            <span class="icon icon-warning text-white"></span>
                         </div>
                         <div>
                             <h3 class="font-semibold text-secondary-300 mb-1">Low Balance Alert</h3>
-                            <p class="text-sm text-gray-300 mb-2">
-                                Your current usage rate suggests power will run out in 3 days. Consider recharging soon or reducing consumption.
-                            </p>
-                            <button class="text-secondary-400 text-sm font-semibold hover:text-secondary-300 transition-colors">
-                                View Recommendations →
-                            </button>
+                            <p class="text-sm text-gray-300 mb-2">Your current usage suggests power will run out in 3 days. Consider recharging soon.</p>
+                            <button class="text-secondary-400 text-sm font-semibold">View Recommendations →</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Enhanced Quick Actions Grid -->
+            <!-- Quick Actions Grid -->
             <div class="px-6 mb-6">
-                <h2 class="text-lg font-semibold text-white mb-4" data-aos="fade-up">Quick Actions</h2>
+                <h2 class="text-lg font-semibold text-white mb-4">Quick Actions</h2>
                 <div class="grid grid-cols-4 gap-3">
-                    <button id="show-forecast-btn" class="glass-card flex flex-col items-center py-4 px-2 rounded-xl card-hover-effect" data-aos="zoom-in" data-aos-delay="100">
+                    <button class="glass-card flex flex-col items-center py-4 px-2 rounded-xl">
                         <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center mb-2">
-                            <span class="icon icon-chart icon-md text-white"></span>
+                            <span class="icon icon-chart text-white"></span>
                         </div>
                         <span class="text-xs text-center text-gray-300 font-medium">Forecast</span>
                     </button>
 
-                    <button id="show-budget-btn" class="glass-card flex flex-col items-center py-4 px-2 rounded-xl card-hover-effect" data-aos="zoom-in" data-aos-delay="200">
+                    <button class="glass-card flex flex-col items-center py-4 px-2 rounded-xl">
                         <div class="w-12 h-12 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-xl flex items-center justify-center mb-2">
-                            <span class="icon icon-wallet icon-md text-white"></span>
+                            <span class="icon icon-wallet text-white"></span>
                         </div>
                         <span class="text-xs text-center text-gray-300 font-medium">Budget</span>
                     </button>
 
-                    <button id="show-devices-btn" class="glass-card flex flex-col items-center py-4 px-2 rounded-xl card-hover-effect" data-aos="zoom-in" data-aos-delay="300">
+                    <button class="glass-card flex flex-col items-center py-4 px-2 rounded-xl">
                         <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-2">
-                            <span class="icon icon-bolt icon-md text-white"></span>
+                            <span class="icon icon-bolt text-white"></span>
                         </div>
                         <span class="text-xs text-center text-gray-300 font-medium">Devices</span>
                     </button>
 
-                    <button id="show-fault-btn" class="glass-card flex flex-col items-center py-4 px-2 rounded-xl card-hover-effect" data-aos="zoom-in" data-aos-delay="400">
+                    <button class="glass-card flex flex-col items-center py-4 px-2 rounded-xl">
                         <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-2">
-                            <span class="icon icon-warning icon-md text-white"></span>
+                            <span class="icon icon-warning text-white"></span>
                         </div>
                         <span class="text-xs text-center text-gray-300 font-medium">Report</span>
                     </button>
                 </div>
             </div>
-
-            <!-- Enhanced Recent Activity -->
-            <div class="px-6 mb-8">
-                <div class="flex justify-between items-center mb-4" data-aos="fade-up">
-                    <h2 class="text-lg font-semibold text-white">Recent Activity</h2>
-                    <button class="text-sm text-primary-400 font-semibold hover:text-primary-300 transition-colors">View All</button>
-                </div>
-                <div class="glass-card divide-y divide-gray-700 rounded-xl overflow-hidden" data-aos="fade-up">
-                    <div class="p-4 flex items-center hover:bg-white/5 transition-all">
-                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-3">
-                            <span class="icon icon-plus icon-md text-white"></span>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-semibold text-white">Token Recharge</p>
-                            <p class="text-xs text-gray-400">Jun 12, 2023 - 11:34 AM</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-semibold text-green-400 font-mono">+25.4 kWh</p>
-                            <p class="text-xs text-gray-400">$15.00</p>
-                        </div>
-                    </div>
-
-                    <div class="p-4 flex items-center hover:bg-white/5 transition-all">
-                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mr-3">
-                            <span class="icon icon-warning icon-md text-white"></span>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-semibold text-white">High Usage Alert</p>
-                            <p class="text-xs text-gray-400">Jun 10, 2023 - 7:15 PM</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-semibold text-orange-400 font-mono">3.5 kWh</p>
-                            <p class="text-xs text-gray-400">Above average</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!-- Enhanced Navigation Bar -->
-        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto glass-morphism border-t border-white/10 z-50">
+        <!-- Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto glass-card border-t border-white/10 z-50 rounded-t-2xl">
             <div class="px-4 py-2">
                 <div class="flex justify-between">
-                    <button id="nav-home" class="nav-item active flex flex-col items-center py-3 px-4 text-primary-400 relative">
-                        <div class="w-6 h-6 flex items-center justify-center">
-                            <span class="icon icon-home icon-lg"></span>
-                        </div>
+                    <button id="nav-home" class="nav-item active flex flex-col items-center py-3 px-4">
+                        <span class="icon icon-home"></span>
                         <span class="text-xs mt-1 font-medium">Home</span>
                     </button>
-
-                    <button id="nav-usage" class="nav-item flex flex-col items-center py-3 px-4 text-gray-400 hover:text-primary-400 transition-colors">
-                        <div class="w-6 h-6 flex items-center justify-center">
-                            <span class="icon icon-chart icon-lg"></span>
-                        </div>
+                    <button class="nav-item flex flex-col items-center py-3 px-4 text-gray-400">
+                        <span class="icon icon-chart"></span>
                         <span class="text-xs mt-1 font-medium">Usage</span>
                     </button>
-
-                    <button id="nav-budget" class="nav-item flex flex-col items-center py-3 px-4 text-gray-400 hover:text-primary-400 transition-colors">
-                        <div class="w-6 h-6 flex items-center justify-center">
-                            <span class="icon icon-wallet icon-lg"></span>
-                        </div>
+                    <button class="nav-item flex flex-col items-center py-3 px-4 text-gray-400">
+                        <span class="icon icon-wallet"></span>
                         <span class="text-xs mt-1 font-medium">Budget</span>
                     </button>
-
-                    <button id="nav-profile" class="nav-item flex flex-col items-center py-3 px-4 text-gray-400 hover:text-primary-400 transition-colors">
-                        <div class="w-6 h-6 flex items-center justify-center">
-                            <span class="icon icon-user icon-lg"></span>
-                        </div>
+                    <button class="nav-item flex flex-col items-center py-3 px-4 text-gray-400">
+                        <span class="icon icon-user"></span>
                         <span class="text-xs mt-1 font-medium">Profile</span>
                     </button>
                 </div>
@@ -1008,45 +528,37 @@
     <!-- Toast Container -->
     <div id="toast-container" class="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-50"></div>
 
-    <!-- Scripts -->
+    <!-- JavaScript -->
     <script>
-        console.log('🚀 EcoWatt PWA v2.0 Professional - Starting...');
+        console.log('🚀 EcoWatt PWA v2.0 - Mobile-First Professional Edition');
 
-        // Enhanced App Class
         class EcoWattApp {
             constructor() {
                 this.currentScreen = 'splash';
                 this.currentSlide = 0;
                 this.isFirstTime = !localStorage.getItem('ecowatt_onboarded');
-                this.charts = {};
-                this.animations = {};
                 console.log('✅ EcoWatt Professional App Initialized');
                 this.init();
             }
 
             init() {
-                console.log('🔧 Initializing professional app components...');
+                console.log('🔧 Initializing mobile-first app...');
                 this.setupSplashScreen();
                 this.setupEventListeners();
                 this.setupPWA();
-                this.initializeAnimations();
             }
 
             setupSplashScreen() {
-                console.log('🎬 Setting up professional splash screen...');
+                console.log('🎬 Setting up splash screen...');
                 const splash = document.getElementById('splashScreen');
                 if (splash) {
-                    // Enhanced splash timing
                     setTimeout(() => {
-                        splash.style.opacity = '0';
-                        splash.style.transform = 'scale(1.1)';
+                        splash.classList.add('fade-out');
                         setTimeout(() => {
                             splash.style.display = 'none';
                             this.checkFirstTime();
-                        }, 1000);
-                    }, 3500);
-                } else {
-                    this.checkFirstTime();
+                        }, 800);
+                    }, 3000);
                 }
             }
 
@@ -1060,40 +572,31 @@
             }
 
             showOnboarding() {
-                console.log('👋 Showing professional onboarding...');
+                console.log('👋 Showing onboarding...');
                 const onboarding = document.getElementById('onboarding-container');
                 if (onboarding) {
-                    onboarding.style.display = 'flex';
-                    onboarding.classList.add('animate-slide-up');
+                    onboarding.classList.add('active');
                 }
             }
 
             showScreen(screenId) {
                 console.log('📱 Showing screen:', screenId);
                 
-                // Hide all screens with animation
                 document.querySelectorAll('.screen').forEach(screen => {
                     screen.classList.remove('active');
-                    screen.classList.add('slide-left');
                 });
 
-                // Hide onboarding
                 const onboarding = document.getElementById('onboarding-container');
                 if (onboarding) {
-                    onboarding.style.display = 'none';
+                    onboarding.classList.remove('active');
                 }
 
-                // Show target screen with animation
-                setTimeout(() => {
-                    const targetScreen = document.getElementById(screenId);
-                    if (targetScreen) {
-                        targetScreen.classList.remove('slide-left');
-                        targetScreen.classList.add('active');
-                        this.initializeScreenAnimations(screenId);
-                    } else {
-                        console.error('❌ Screen not found:', screenId);
-                    }
-                }, 150);
+                const targetScreen = document.getElementById(screenId);
+                if (targetScreen) {
+                    targetScreen.classList.add('active');
+                } else {
+                    console.error('❌ Screen not found:', screenId);
+                }
 
                 this.currentScreen = screenId;
                 this.updateNavigation(screenId);
@@ -1108,54 +611,15 @@
                 }
             }
 
-            initializeScreenAnimations(screenId) {
-                if (screenId === 'home-screen') {
-                    this.animateEnergyMeter();
-                    this.animateProgressBars();
-                }
-            }
-
-            animateEnergyMeter() {
-                // GSAP animation for energy meter
-                if (typeof gsap !== 'undefined') {
-                    const meterProgress = document.getElementById('meter-progress');
-                    if (meterProgress) {
-                        gsap.from(meterProgress, {
-                            duration: 2,
-                            strokeDashoffset: 534,
-                            ease: "power2.out"
-                        });
-                    }
-                }
-            }
-
-            animateProgressBars() {
-                // Animate progress bars on entry
-                document.querySelectorAll('.progress-enhanced .h-full').forEach((bar, index) => {
-                    setTimeout(() => {
-                        const width = bar.style.width;
-                        bar.style.width = '0%';
-                        setTimeout(() => {
-                            bar.style.width = width;
-                        }, 100);
-                    }, index * 200);
-                });
-            }
-
             setupEventListeners() {
-                console.log('🎧 Setting up professional event listeners...');
+                console.log('🎧 Setting up event listeners...');
                 
-                // Auth flow with enhanced feedback
                 const sendOtpBtn = document.getElementById('send-otp-btn');
                 if (sendOtpBtn) {
                     sendOtpBtn.addEventListener('click', () => {
                         console.log('📱 Send OTP clicked');
-                        this.showLoadingState(sendOtpBtn, 'Sending...');
-                        setTimeout(() => {
-                            this.hideLoadingState(sendOtpBtn, 'Send Verification Code');
-                            this.showScreen('otp-screen');
-                            this.showToast('Verification code sent!', 'success');
-                        }, 1500);
+                        this.showScreen('otp-screen');
+                        this.showToast('Verification code sent!', 'success');
                     });
                 }
 
@@ -1163,56 +627,29 @@
                 if (verifyOtpBtn) {
                     verifyOtpBtn.addEventListener('click', () => {
                         console.log('✅ Verify OTP clicked');
-                        this.showLoadingState(verifyOtpBtn, 'Verifying...');
-                        setTimeout(() => {
-                            localStorage.setItem('ecowatt_onboarded', 'true');
-                            this.hideLoadingState(verifyOtpBtn, 'Verify & Continue');
-                            this.showScreen('home-screen');
-                            this.showToast('Welcome to EcoWatt!', 'success');
-                        }, 1500);
+                        localStorage.setItem('ecowatt_onboarded', 'true');
+                        this.showScreen('home-screen');
+                        this.showToast('Welcome to EcoWatt!', 'success');
                     });
                 }
 
-                // Navigation with haptic feedback
                 const navHome = document.getElementById('nav-home');
                 if (navHome) {
                     navHome.addEventListener('click', () => {
                         console.log('🏠 Home navigation clicked');
                         this.showScreen('home-screen');
-                        this.triggerHapticFeedback();
                     });
                 }
 
-                // Enhanced quick actions
                 const rechargeBtn = document.getElementById('show-recharge-btn');
                 if (rechargeBtn) {
                     rechargeBtn.addEventListener('click', () => {
                         console.log('⚡ Recharge button clicked');
-                        this.showRechargeModal();
+                        this.showToast('🚀 Recharge feature coming soon!\n\n✅ EcoCash integration\n✅ OneMoney support\n✅ Instant token delivery', 'info', 4000);
                     });
                 }
 
-                // OTP inputs with auto-advance
                 this.setupOTPInputs();
-                
-                // Resize handler for responsive adjustments
-                window.addEventListener('resize', () => this.handleResize());
-                
-                // Visibility change handler for PWA
-                document.addEventListener('visibilitychange', () => this.handleVisibilityChange());
-            }
-
-            showLoadingState(button, text) {
-                button.disabled = true;
-                button.innerHTML = `
-                    <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                    ${text}
-                `;
-            }
-
-            hideLoadingState(button, originalText) {
-                button.disabled = false;
-                button.innerHTML = originalText;
             }
 
             setupOTPInputs() {
@@ -1223,11 +660,9 @@
                             otpInputs[index + 1].focus();
                         }
                         
-                        // Auto-verify when all fields are filled
                         if (index === otpInputs.length - 1 && e.target.value.length === 1) {
                             const otp = Array.from(otpInputs).map(input => input.value).join('');
                             if (otp.length === 4) {
-                                this.triggerHapticFeedback();
                                 setTimeout(() => {
                                     document.getElementById('verify-otp-btn').click();
                                 }, 300);
@@ -1246,98 +681,21 @@
             setupPWA() {
                 console.log('📱 Setting up PWA features...');
                 
-                // Service Worker registration
                 if ('serviceWorker' in navigator) {
                     navigator.serviceWorker.register('./sw.js')
                         .then(reg => console.log('✅ SW registered:', reg))
                         .catch(err => console.log('⚠️ SW registration failed:', err));
                 }
-
-                // Install prompt
-                let deferredPrompt;
-                window.addEventListener('beforeinstallprompt', (e) => {
-                    e.preventDefault();
-                    deferredPrompt = e;
-                    this.showInstallPrompt();
-                });
-
-                const installBtn = document.getElementById('installBtn');
-                if (installBtn) {
-                    installBtn.addEventListener('click', () => {
-                        if (deferredPrompt) {
-                            deferredPrompt.prompt();
-                            deferredPrompt.userChoice.then((choiceResult) => {
-                                if (choiceResult.outcome === 'accepted') {
-                                    console.log('✅ User accepted PWA install');
-                                    this.hideInstallPrompt();
-                                }
-                                deferredPrompt = null;
-                            });
-                        }
-                    });
-                }
-
-                const dismissInstall = document.getElementById('dismissInstall');
-                if (dismissInstall) {
-                    dismissInstall.addEventListener('click', () => {
-                        this.hideInstallPrompt();
-                    });
-                }
-            }
-
-            showInstallPrompt() {
-                const prompt = document.getElementById('installPrompt');
-                if (prompt) {
-                    prompt.classList.remove('hidden');
-                    setTimeout(() => {
-                        prompt.style.transform = 'translateY(0)';
-                        prompt.style.opacity = '1';
-                    }, 100);
-                }
-            }
-
-            hideInstallPrompt() {
-                const prompt = document.getElementById('installPrompt');
-                if (prompt) {
-                    prompt.style.transform = 'translateY(-100%)';
-                    prompt.style.opacity = '0';
-                    setTimeout(() => {
-                        prompt.classList.add('hidden');
-                    }, 300);
-                }
-            }
-
-            initializeAnimations() {
-                console.log('🎨 Initializing professional animations...');
-                
-                // Initialize AOS
-                if (typeof AOS !== 'undefined') {
-                    AOS.init({
-                        duration: 800,
-                        easing: 'ease-out-cubic',
-                        once: true,
-                        offset: 50
-                    });
-                }
-
-                // Initialize GSAP ScrollTrigger
-                if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-                    gsap.registerPlugin(ScrollTrigger);
-                }
-            }
-
-            showRechargeModal() {
-                this.showToast('🚀 Advanced recharge modal opening soon!\n\n✅ EcoCash integration\n✅ OneMoney support\n✅ Instant token delivery\n✅ Smart meter sync', 'info', 5000);
             }
 
             showToast(message, type = 'info', duration = 3000) {
-                console.log('🍞 Professional toast:', message);
+                console.log('🍞 Toast:', message);
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
                 toast.innerHTML = `
                     <div class="flex items-center">
                         <div class="mr-3">
-                            ${type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'}
+                            ${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}
                         </div>
                         <div class="flex-1">${message.replace(/\n/g, '<br>')}</div>
                     </div>
@@ -1346,12 +704,10 @@
                 const container = document.getElementById('toast-container');
                 container.appendChild(toast);
 
-                // Show toast with animation
                 requestAnimationFrame(() => {
                     toast.classList.add('show');
                 });
 
-                // Auto remove with animation
                 setTimeout(() => {
                     toast.classList.remove('show');
                     setTimeout(() => {
@@ -1361,99 +717,35 @@
                     }, 400);
                 }, duration);
             }
-
-            triggerHapticFeedback() {
-                if (navigator.vibrate) {
-                    navigator.vibrate(50);
-                }
-            }
-
-            handleResize() {
-                // Handle responsive adjustments
-                console.log('📱 Handling resize for responsive design');
-            }
-
-            handleVisibilityChange() {
-                if (document.hidden) {
-                    console.log('📱 App went to background');
-                } else {
-                    console.log('📱 App came to foreground');
-                    // Refresh data if needed
-                }
-            }
         }
 
-        // Global functions for onboarding
+        // Global onboarding functions
         let currentSlide = 0;
 
         window.nextOnboardingSlide = function() {
-            console.log('➡️ Next slide with animation');
+            console.log('➡️ Next slide');
             if (currentSlide < 2) {
                 const slides = document.querySelectorAll('.onboarding-slide');
-                
-                // Animate out current slide
-                gsap.to(slides[currentSlide], {
-                    duration: 0.3,
-                    x: -100,
-                    opacity: 0,
-                    ease: "power2.in",
-                    onComplete: () => {
-                        slides[currentSlide].classList.remove('active');
-                        currentSlide++;
-                        
-                        // Animate in next slide
-                        slides[currentSlide].style.transform = 'translateX(100px)';
-                        slides[currentSlide].style.opacity = '0';
-                        slides[currentSlide].classList.add('active');
-                        
-                        gsap.to(slides[currentSlide], {
-                            duration: 0.3,
-                            x: 0,
-                            opacity: 1,
-                            ease: "power2.out"
-                        });
-                    }
-                });
+                slides[currentSlide].classList.remove('active');
+                currentSlide++;
+                slides[currentSlide].classList.add('active');
             }
         };
 
         window.prevOnboardingSlide = function() {
-            console.log('⬅️ Previous slide with animation');
+            console.log('⬅️ Previous slide');
             if (currentSlide > 0) {
                 const slides = document.querySelectorAll('.onboarding-slide');
-                
-                // Animate out current slide
-                gsap.to(slides[currentSlide], {
-                    duration: 0.3,
-                    x: 100,
-                    opacity: 0,
-                    ease: "power2.in",
-                    onComplete: () => {
-                        slides[currentSlide].classList.remove('active');
-                        currentSlide--;
-                        
-                        // Animate in previous slide
-                        slides[currentSlide].style.transform = 'translateX(-100px)';
-                        slides[currentSlide].style.opacity = '0';
-                        slides[currentSlide].classList.add('active');
-                        
-                        gsap.to(slides[currentSlide], {
-                            duration: 0.3,
-                            x: 0,
-                            opacity: 1,
-                            ease: "power2.out"
-                        });
-                    }
-                });
+                slides[currentSlide].classList.remove('active');
+                currentSlide--;
+                slides[currentSlide].classList.add('active');
             }
         };
 
         window.completeOnboarding = function() {
-            console.log('🎉 Professional onboarding completed');
+            console.log('🎉 Onboarding completed');
             localStorage.setItem('ecowatt_onboarded', 'true');
-            if (window.ecoWattApp) {
-                window.ecoWattApp.showScreen('auth-screen');
-            }
+            window.ecoWattApp.showScreen('auth-screen');
         };
 
         window.showScreen = function(screenId) {
@@ -1462,35 +754,22 @@
             }
         };
 
-        // Enhanced initialization
+        // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 DOM Content Loaded - Starting Professional EcoWatt PWA...');
+            console.log('🚀 DOM Content Loaded - Starting Mobile-First EcoWatt PWA...');
             
             try {
-                // Initialize the professional app
                 window.ecoWattApp = new EcoWattApp();
-                console.log('✅ EcoWatt Professional PWA Initialized Successfully');
-                
-                // Add performance monitoring
-                if (window.performance) {
-                    const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
-                    console.log(`📊 App loaded in ${loadTime}ms`);
-                }
-                
+                console.log('✅ EcoWatt Mobile-First PWA Initialized Successfully');
             } catch (error) {
-                console.error('❌ Failed to initialize Professional EcoWatt PWA:', error);
-                
-                // Enhanced fallback with better error handling
+                console.error('❌ Failed to initialize EcoWatt PWA:', error);
                 document.body.innerHTML = `
-                    <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-darkBg to-darkCard text-white font-inter text-center p-6">
-                        <div class="glass-morphism p-8 rounded-2xl max-w-md">
-                            <div class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl">⚠️</span>
-                            </div>
-                            <h1 class="text-2xl font-bold text-red-400 mb-4">Loading Error</h1>
-                            <p class="text-gray-300 mb-6">The app encountered an issue. Our advanced error recovery is working...</p>
-                            <button onclick="window.location.reload()" class="btn-glow bg-gradient-to-r from-primary-500 to-primary-600 text-white px-6 py-3 rounded-xl font-semibold">
-                                🔄 Reload EcoWatt
+                    <div class="min-h-screen flex items-center justify-center bg-darkBg text-white text-center p-6">
+                        <div class="glass-card p-8 rounded-2xl max-w-sm">
+                            <h1 class="text-2xl font-bold text-red-400 mb-4">⚠️ Loading Error</h1>
+                            <p class="text-gray-300 mb-6">The app encountered an issue.</p>
+                            <button onclick="window.location.reload()" class="btn-glow text-white px-6 py-3 rounded-xl font-semibold">
+                                🔄 Reload App
                             </button>
                         </div>
                     </div>
@@ -1498,33 +777,7 @@
             }
         });
 
-        // Enhanced error handling
-        window.addEventListener('error', function(e) {
-            console.error('🚨 Global error:', e.error);
-            // Could send to analytics service
-        });
-
-        window.addEventListener('unhandledrejection', function(e) {
-            console.error('🚨 Unhandled promise rejection:', e.reason);
-            // Could send to analytics service
-        });
-
-        // Performance monitoring
-        window.addEventListener('load', function() {
-            // Monitor app performance
-            if (window.performance) {
-                setTimeout(() => {
-                    const perfData = window.performance.getEntriesByType('navigation')[0];
-                    console.log('📊 Performance metrics:', {
-                        'Page Load': Math.round(perfData.loadEventEnd - perfData.fetchStart) + 'ms',
-                        'DOM Content Loaded': Math.round(perfData.domContentLoadedEventEnd - perfData.fetchStart) + 'ms',
-                        'First Paint': Math.round(perfData.responseEnd - perfData.fetchStart) + 'ms'
-                    });
-                }, 1000);
-            }
-        });
-
-        console.log('📝 EcoWatt Professional PWA script loaded successfully');
+        console.log('📝 EcoWatt Mobile-First PWA script loaded successfully');
     </script>
 </body>
 </html>
