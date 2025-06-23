@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="assets/fontawesome/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWatt Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .debug-container {
+            text-align: center;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .status-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .status-ok { border-left: 4px solid #4CAF50; }
+        .status-error { border-left: 4px solid #f44336; }
+        .btn {
+            background: linear-gradient(135deg, #0C6B3C, #2fa671);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        #console-output {
+            background: #000;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <div class="logo">⚡</div>
+        <h1>EcoWatt Debug Console</h1>
+        <p>Let's test everything step by step</p>
+        
+        <div id="status-checks">
+            <div class="status-item status-ok">
+                <span>HTML Loading</span>
+                <span>✅ OK</span>
+            </div>
+            <div class="status-item" id="css-status">
+                <span>CSS Loading</span>
+                <span id="css-result">⏳ Testing...</span>
+            </div>
+            <div class="status-item" id="js-status">
+                <span>JavaScript Execution</span>
+                <span id="js-result">⏳ Testing...</span>
+            </div>
+            <div class="status-item" id="external-status">
+                <span>External Resources</span>
+                <span id="external-result">⏳ Testing...</span>
+            </div>
+        </div>
+
+        <div>
+            <button class="btn" onclick="runTests()">🔍 Run Debug Tests</button>
+            <button class="btn" onclick="testEcoWatt()">🚀 Test EcoWatt</button>
+            <button class="btn" onclick="clearConsole()">🗑️ Clear Console</button>
+        </div>
+
+        <div id="console-output"></div>
+    </div>
+
+    <script>
+        // Console capture
+        const originalLog = console.log;
+        const originalError = console.error;
+        const consoleOutput = document.getElementById('console-output');
+        
+        function logToConsole(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'warn' ? '⚠️' : '✅';
+            consoleOutput.textContent += `[${timestamp}] ${prefix} ${message}\n`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog(...args);
+            logToConsole(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError(...args);
+            logToConsole(args.join(' '), 'error');
+        };
+
+        // Initial status update
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Debug console loaded successfully');
+            
+            // Test CSS
+            const testDiv = document.createElement('div');
+            testDiv.style.background = 'linear-gradient(135deg, #0C6B3C, #2fa671)';
+            if (testDiv.style.background) {
+                document.getElementById('css-result').textContent = '✅ OK';
+                document.getElementById('css-status').className = 'status-item status-ok';
+            } else {
+                document.getElementById('css-result').textContent = '❌ Failed';
+                document.getElementById('css-status').className = 'status-item status-error';
+            }
+            
+            // Test JavaScript
+            try {
+                const testArray = [1, 2, 3].map(x => x * 2);
+                document.getElementById('js-result').textContent = '✅ OK';
+                document.getElementById('js-status').className = 'status-item status-ok';
+                console.log('JavaScript ES6 features working');
+            } catch (e) {
+                document.getElementById('js-result').textContent = '❌ Failed';
+                document.getElementById('js-status').className = 'status-item status-error';
+                console.error('JavaScript error:', e);
+            }
+        });
+
+        function runTests() {
+            console.log('🔍 Running comprehensive tests...');
+            
+            // Test 1: Local Storage
+            try {
+                localStorage.setItem('test', 'value');
+                const result = localStorage.getItem('test');
+                localStorage.removeItem('test');
+                console.log('✅ LocalStorage: Working');
+            } catch (e) {
+                console.error('❌ LocalStorage: Failed -', e.message);
+            }
+            
+            // Test 2: Fetch API
+            fetch('data:text/plain,test')
+                .then(response => response.text())
+                .then(data => console.log('✅ Fetch API: Working'))
+                .catch(e => console.error('❌ Fetch API: Failed -', e.message));
+            
+            // Test 3: CSS Features
+            const testEl = document.createElement('div');
+            testEl.style.backdropFilter = 'blur(10px)';
+            if (testEl.style.backdropFilter) {
+                console.log('✅ CSS backdrop-filter: Supported');
+            } else {
+                console.log('⚠️ CSS backdrop-filter: Not supported');
+            }
+            
+            // Test 4: Service Worker
+            if ('serviceWorker' in navigator) {
+                console.log('✅ Service Worker: Supported');
+            } else {
+                console.log('❌ Service Worker: Not supported');
+            }
+            
+            // Test 5: External Resources
+            testExternalResources();
+        }
+        
+        function testExternalResources() {
+            console.log('🌐 Testing external resources...');
+            
+            // Test Font Awesome
+            const faTest = document.createElement('i');
+            faTest.className = 'fas fa-home';
+            document.body.appendChild(faTest);
+            
+            setTimeout(() => {
+                const styles = window.getComputedStyle(faTest);
+                if (styles.fontFamily.includes('Font Awesome')) {
+                    console.log('✅ Font Awesome: Loaded');
+                    document.getElementById('external-result').textContent = '✅ OK';
+                    document.getElementById('external-status').className = 'status-item status-ok';
+                } else {
+                    console.log('❌ Font Awesome: Failed to load');
+                    document.getElementById('external-result').textContent = '❌ Failed';
+                    document.getElementById('external-status').className = 'status-item status-error';
+                }
+                document.body.removeChild(faTest);
+            }, 1000);
+        }
+        
+        function testEcoWatt() {
+            console.log('🚀 Testing EcoWatt components...');
+            
+            // Simulate EcoWatt initialization
+            try {
+                console.log('📱 Creating mock EcoWatt app...');
+                
+                const mockApp = {
+                    currentScreen: 'splash',
+                    showScreen: function(screen) {
+                        console.log(`📺 Switching to screen: ${screen}`);
+                        return true;
+                    },
+                    init: function() {
+                        console.log('🔧 Mock app initialized');
+                        this.setupSplashScreen();
+                        this.setupEventListeners();
+                    },
+                    setupSplashScreen: function() {
+                        console.log('🎬 Mock splash screen setup');
+                    },
+                    setupEventListeners: function() {
+                        console.log('🎧 Mock event listeners setup');
+                    }
+                };
+                
+                mockApp.init();
+                console.log('✅ EcoWatt mock test: PASSED');
+                
+                // Test button functionality
+                const testBtn = document.createElement('button');
+                testBtn.textContent = 'Test Button';
+                testBtn.onclick = () => console.log('🖱️ Button click: Working');
+                testBtn.click();
+                
+            } catch (e) {
+                console.error('❌ EcoWatt test failed:', e);
+            }
+        }
+        
+        function clearConsole() {
+            consoleOutput.textContent = '';
+            console.log('🗑️ Console cleared');
+        }
+        
+        // Test error handling
+        window.addEventListener('error', function(e) {
+            console.error('🚨 Global error:', e.message, 'at', e.filename + ':' + e.lineno);
+        });
+        
+        // Test unhandled promise rejections
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('🚨 Unhandled promise rejection:', e.reason);
+        });
+        
+        console.log('🎯 Debug console ready! Click "Run Debug Tests" to start.');
+    </script>
+</body>
+</html>

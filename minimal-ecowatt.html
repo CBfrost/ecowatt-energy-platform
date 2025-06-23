@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoWatt - Minimal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 100%);
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .screen {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .btn {
+            background: linear-gradient(135deg, #0C6B3C, #2fa671);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .logo {
+            font-size: 6rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem;
+            max-width: 400px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #00FFFF, #FF0080, #8000FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="screen active">
+        <div class="logo">⚡</div>
+        <h1 class="gradient-text" style="font-size: 3rem; margin-bottom: 1rem;">EcoWatt</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem;">AI-Powered Energy Management</p>
+        <div style="width: 40px; height: 40px; border: 4px solid #00FFFF; border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+    </div>
+
+    <!-- Onboarding Screen -->
+    <div id="onboarding-screen" class="screen">
+        <div class="logo">📱</div>
+        <h2 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 1rem;">Welcome to EcoWatt</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 2rem; max-width: 400px;">Smart energy management for Zimbabwe's prepaid electricity system</p>
+        <button class="btn" onclick="showScreen('auth-screen')">Get Started</button>
+    </div>
+
+    <!-- Auth Screen -->
+    <div id="auth-screen" class="screen">
+        <div class="card">
+            <div class="logo">🔐</div>
+            <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 1rem;">Login</h2>
+            <input type="tel" placeholder="+263 77 123 4567" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #333; background: rgba(255,255,255,0.1); color: white; font-size: 16px; margin-bottom: 1rem;">
+            <button class="btn" onclick="showScreen('home-screen')" style="width: 100%;">Send OTP</button>
+        </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="home-screen" class="screen">
+        <h1 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 2rem;">⚡ EcoWatt Dashboard</h1>
+        
+        <div class="card">
+            <h3 style="margin-bottom: 1rem;">Current Balance</h3>
+            <div style="font-size: 3rem; font-weight: bold; color: #00FFFF; margin-bottom: 1rem;">8.42 kWh</div>
+            <p style="color: #FFA500;">Est. 3 days remaining</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 400px;">
+            <div class="card" style="padding: 1.5rem;">
+                <h4>Today's Usage</h4>
+                <div style="font-size: 1.5rem; font-weight: bold; color: #00FFFF;">1.2 kWh</div>
+            </div>
+            <div class="card" style="padding: 1.5rem;">
+                <h4>Monthly Budget</h4>
+                <div style="font-size: 1.5rem; font-weight: bold; color: #FF0080;">$25 ZWL</div>
+            </div>
+        </div>
+
+        <button class="btn" onclick="alert('Recharge feature coming soon!')">⚡ Recharge Now</button>
+        <button class="btn" onclick="showScreen('onboarding-screen')">🔄 Reset Demo</button>
+    </div>
+
+    <script>
+        console.log('🚀 EcoWatt Minimal - Starting...');
+
+        // Simple screen management
+        function showScreen(screenId) {
+            console.log('📱 Showing screen:', screenId);
+            
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show target screen
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                console.log('✅ Screen shown:', screenId);
+            } else {
+                console.error('❌ Screen not found:', screenId);
+            }
+        }
+
+        // Auto-advance splash screen
+        setTimeout(() => {
+            console.log('⏰ Auto-advancing from splash screen');
+            showScreen('onboarding-screen');
+        }, 3000);
+
+        // Add spin animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log('✅ EcoWatt Minimal - Ready!');
+    </script>
+</body>
+</html>
