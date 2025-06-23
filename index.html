@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EcoWatt - AI-Powered Energy Management</title>
-    <meta name="description" content="Professional energy management platform for Zimbabwe's prepaid electricity system">
+    <meta name="description" content="AI-powered energy management platform for Zimbabwe's prepaid electricity system">
     <meta name="theme-color" content="#0C6B3C">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" type="image/svg+xml" href="./favicon.svg">
     <link rel="manifest" href="./manifest.json">
     
-    <!-- Professional External Resources with Fallbacks -->
+    <!-- Professional External Resources -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -20,20 +20,10 @@
                 extend: {
                     fontFamily: { 'inter': ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: { 500: '#2fa671', 600: '#0C6B3C' },
-                        secondary: { 400: '#fbbf24', 500: '#F4A300' },
-                        neonCyan: '#00FFFF', neonPink: '#FF0080', neonPurple: '#8000FF',
+                        primary: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d' },
+                        secondary: { 400: '#fbbf24', 500: '#f59e0b' },
+                        accent: { 400: '#8b5cf6', 500: '#7c3aed' },
                         darkBg: '#0F0F23', darkCard: '#1A1A2E'
-                    },
-                    animation: {
-                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
-                        'slide-up': 'slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
-                        'fade-in': 'fadeIn 0.8s ease-out',
-                        'shimmer': 'shimmer 2s linear infinite'
-                    },
-                    backgroundImage: {
-                        'gradient-aurora': 'linear-gradient(135deg, #00ffff 0%, #ff0080 50%, #8000ff 100%)',
-                        'gradient-mesh': 'radial-gradient(ellipse at top left, rgba(0, 255, 255, 0.1), transparent 50%), radial-gradient(ellipse at bottom right, rgba(255, 0, 128, 0.1), transparent 50%)'
                     }
                 }
             }
@@ -43,217 +33,303 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
-        /* Mobile-First Professional Styles */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 100%);
             color: white; min-height: 100vh; overflow-x: hidden;
-            -webkit-font-smoothing: antialiased; font-size: 16px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Professional Glass System */
+        /* Professional Design System */
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 24px;
         }
-        .glass-card:hover { transform: translateY(-4px); border-color: rgba(0, 255, 255, 0.3); }
+        .glass-card:hover { transform: translateY(-4px); border-color: rgba(34, 197, 94, 0.3); }
 
-        /* Professional Icon System */
-        .icon { width: 1.25rem; height: 1.25rem; display: inline-block; }
-        .icon-home { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-chart { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-wallet { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-user { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2Z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-bolt { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-bell { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-phone { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-check { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-arrow-right { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-arrow-left { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-clock { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm4.2 14.2L11 13V7h1.5v5.2l4.5 2.7-.8 1.3z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-warning { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-        .icon-bluetooth { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='currentColor' viewBox='0 0 24 24'%3E%3Cpath d='M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71L13.41 12l4.3-4.29z'/%3E%3C/svg%3E") no-repeat center; background-size: contain; }
-
-        /* Button System */
-        .btn-glow {
-            background: linear-gradient(135deg, #0C6B3C, #2fa671);
-            transition: all 0.3s ease; position: relative; overflow: hidden;
+        /* Professional Button System */
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white; border: none; border-radius: 16px; padding: 16px 32px;
+            font-weight: 600; font-size: 16px; cursor: pointer;
+            transition: all 0.3s ease; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.25);
         }
-        .btn-glow:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(12, 107, 60, 0.4); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(34, 197, 94, 0.35); }
 
-        /* Input System */
-        .input-glow { transition: all 0.3s ease; }
-        .input-glow:focus { box-shadow: 0 0 0 2px #00FFFF; border-color: #00FFFF; outline: none; }
-
-        /* Animations */
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px; padding: 16px 32px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; backdrop-filter: blur(10px);
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-2px); }
+
+        /* Enhanced Input System */
+        .input-enhanced {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; padding: 18px 20px; color: white; font-size: 16px;
+            transition: all 0.3s ease; width: 100%; backdrop-filter: blur(10px);
+        }
+        .input-enhanced:focus {
+            border-color: #22c55e; box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.2);
+            outline: none; background: rgba(255, 255, 255, 0.08);
+        }
+        .input-enhanced::placeholder { color: rgba(255, 255, 255, 0.5); }
 
         /* Screen System */
-        .screen { display: none; }
-        .screen.active { display: block; animation: slideUp 0.6s ease-out; }
-        .onboarding-screen { display: none; }
-        .onboarding-screen.active { display: flex; }
-        .onboarding-slide { display: none; }
-        .onboarding-slide.active { display: flex; }
+        .screen { display: none; opacity: 0; transition: all 0.4s ease; }
+        .screen.active { display: block; opacity: 1; animation: slideIn 0.6s ease-out; }
+        .onboarding-screen { display: none; min-height: 100vh; }
+        .onboarding-screen.active { display: flex; animation: slideIn 0.6s ease-out; }
+        .onboarding-slide { display: none; width: 100%; }
+        .onboarding-slide.active { display: flex; animation: slideIn 0.4s ease-out; }
 
-        /* Splash Screen */
-        .splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(135deg, #0F0F23 0%, #1A1A2E 50%, #0C6B3C 100%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; transition: opacity 0.8s ease-out;
-        }
-        .splash-screen.fade-out { opacity: 0; pointer-events: none; }
-        .splash-logo {
-            width: 120px; height: 120px; border-radius: 50%;
-            background: linear-gradient(135deg, #00FFFF, #FF0080, #8000FF);
-            display: flex; align-items: center; justify-content: center;
-            animation: pulseGlow 2s infinite; margin-bottom: 2rem;
-        }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Progress Bar */
-        .progress-bar { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
-        .progress-fill {
-            height: 100%; background: linear-gradient(90deg, #00FFFF, #FF0080, #8000FF);
-            border-radius: 4px; transition: width 0.8s ease; position: relative;
-        }
-        .progress-fill::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shimmer 2s infinite;
+        /* Progress Indicators */
+        .progress-dot { width: 8px; height: 8px; border-radius: 50%; transition: all 0.3s ease; }
+        .progress-dot.active { width: 32px; background: linear-gradient(90deg, #22c55e, #8b5cf6); }
+        .progress-dot:not(.active) { background: rgba(255, 255, 255, 0.3); }
+
+        /* Navigation Enhancement */
+        .nav-item { transition: all 0.3s ease; position: relative; padding: 12px; border-radius: 12px; }
+        .nav-item.active { color: #22c55e; background: rgba(34, 197, 94, 0.1); }
+        .nav-item:not(.active) { color: rgba(255, 255, 255, 0.6); }
+
+        /* Enhanced Energy Meter */
+        .energy-meter { width: 240px; height: 240px; margin: 2rem auto; position: relative; }
+        .meter-glow {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 220px; height: 220px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
         }
 
-        /* Navigation */
-        .nav-item { transition: all 0.3s ease; position: relative; }
-        .nav-item.active { color: #2fa671; }
-        .nav-item.active::after {
-            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 24px; height: 3px; background: linear-gradient(90deg, #00FFFF, #FF0080);
-            border-radius: 2px;
+        @keyframes pulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; } 50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; } }
+
+        /* Device Cards */
+        .device-card {
+            background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; padding: 16px; transition: all 0.3s ease;
         }
+        .device-card:hover { transform: translateY(-2px); border-color: rgba(34, 197, 94, 0.3); }
 
         /* Toast System */
         .toast {
             position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(20px);
-            background: linear-gradient(135deg, rgba(12, 107, 60, 0.95), rgba(47, 166, 113, 0.95));
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.95), rgba(22, 163, 74, 0.95));
             backdrop-filter: blur(20px); color: white; padding: 16px 24px; border-radius: 16px;
             font-weight: 600; z-index: 1000; opacity: 0; transition: all 0.4s ease;
-            border: 1px solid rgba(0, 255, 255, 0.3); max-width: 90vw;
+            border: 1px solid rgba(34, 197, 94, 0.3); max-width: 90vw;
         }
         .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-        .toast.success { background: linear-gradient(135deg, rgba(56, 142, 60, 0.95), rgba(76, 175, 80, 0.95)); }
-        .toast.error { background: linear-gradient(135deg, rgba(211, 47, 47, 0.95), rgba(244, 67, 54, 0.95)); }
+        .toast.success { background: linear-gradient(135deg, rgba(34, 197, 94, 0.95), rgba(22, 163, 74, 0.95)); }
+        .toast.error { background: linear-gradient(135deg, rgba(239, 68, 68, 0.95), rgba(220, 38, 38, 0.95)); }
 
         /* Mobile Optimizations */
         @media (max-width: 768px) {
-            .splash-logo { width: 100px; height: 100px; }
             .glass-card { margin: 0 4px; }
+            .energy-meter { width: 200px; height: 200px; }
         }
 
         /* Desktop Optimizations */
         @media (min-width: 769px) {
-            #app { max-width: 400px; margin: 0 auto; }
-            .splash-logo { width: 140px; height: 140px; }
-        }
-
-        /* Large Desktop */
-        @media (min-width: 1200px) {
-            #app { max-width: 450px; }
+            #app { max-width: 420px; margin: 0 auto; }
+            .energy-meter { width: 260px; height: 260px; }
         }
     </style>
 </head>
 
 <body class="font-inter">
-    <!-- Splash Screen -->
-    <div id="splashScreen" class="splash-screen">
-        <div class="splash-logo">
-            <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
-            </svg>
-        </div>
-        <h1 class="text-4xl font-bold mb-4 bg-gradient-aurora bg-clip-text text-transparent">EcoWatt</h1>
-        <p class="text-lg text-gray-300 mb-8">AI-Powered Energy Management</p>
-        <div class="w-6 h-6 border-3 border-neonCyan border-t-transparent rounded-full animate-spin"></div>
-    </div>
-
     <!-- Main App Container -->
-    <div id="app" class="max-w-md mx-auto relative min-h-screen bg-gradient-mesh">
+    <div id="app" class="max-w-md mx-auto relative min-h-screen">
         
         <!-- Onboarding Screens -->
-        <div id="onboarding-container" class="onboarding-screen min-h-screen">
-            <!-- Slide 1 -->
-            <div class="onboarding-slide active flex flex-col h-screen p-6">
+        <div id="onboarding-container" class="onboarding-screen active">
+            <!-- Slide 1: Smart Energy Management -->
+            <div class="onboarding-slide active flex flex-col h-screen p-6 bg-gradient-to-br from-darkBg via-darkCard to-primary-900">
                 <div class="flex-1 flex flex-col items-center justify-center text-center">
-                    <div class="w-64 h-64 mb-8 flex items-center justify-center text-8xl animate-bounce">📱</div>
-                    <h2 class="text-3xl font-bold bg-gradient-aurora bg-clip-text text-transparent mb-4">Smart Energy Management</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">Take control of your electricity usage with AI-powered insights for Zimbabwe</p>
+                    <div class="w-72 h-72 mb-8 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-blue-600/20 rounded-full animate-pulse"></div>
+                        <div class="relative text-9xl">📱</div>
+                    </div>
+                    <h2 class="text-4xl font-bold bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent mb-6">Smart Energy Management</h2>
+                    <p class="text-xl text-gray-300 leading-relaxed max-w-sm px-4">Take control of your electricity usage with AI-powered insights for Zimbabwe</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <div class="flex space-x-2">
-                        <div class="w-8 h-2 bg-gradient-aurora rounded-full"></div>
-                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
-                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
+                        <div class="progress-dot active"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
                     </div>
-                    <button onclick="nextOnboardingSlide()" class="btn-glow text-white px-6 py-3 rounded-full font-semibold flex items-center">
-                        Next <span class="icon icon-arrow-right ml-2"></span>
+                    <button onclick="nextOnboardingSlide()" class="btn-primary flex items-center gap-3">
+                        Next <span class="text-xl">→</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Slide 2 -->
-            <div class="onboarding-slide flex flex-col h-screen p-6">
+            <!-- Slide 2: AI-Powered Forecasting -->
+            <div class="onboarding-slide flex flex-col h-screen p-6 bg-gradient-to-br from-darkBg via-darkCard to-accent-900">
                 <div class="flex-1 flex flex-col items-center justify-center text-center">
-                    <div class="w-64 h-64 mb-8 flex items-center justify-center text-8xl animate-pulse">🤖</div>
-                    <h2 class="text-3xl font-bold bg-gradient-aurora bg-clip-text text-transparent mb-4">AI-Powered Forecasting</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">Get accurate predictions of when your power will run out with machine learning</p>
+                    <div class="w-72 h-72 mb-8 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-purple-600/20 rounded-full animate-pulse"></div>
+                        <div class="relative text-9xl">🤖</div>
+                    </div>
+                    <h2 class="text-4xl font-bold bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent mb-6">AI-Powered Forecasting</h2>
+                    <p class="text-xl text-gray-300 leading-relaxed max-w-sm px-4">Get accurate predictions of when your power will run out with machine learning</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <div class="flex space-x-2">
-                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
-                        <div class="w-8 h-2 bg-gradient-aurora rounded-full"></div>
-                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot active"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
                     </div>
-                    <div class="flex gap-3">
-                        <button onclick="prevOnboardingSlide()" class="glass-card px-4 py-3 rounded-full font-semibold flex items-center text-gray-300">
-                            <span class="icon icon-arrow-left mr-2"></span> Back
+                    <div class="flex gap-4">
+                        <button onclick="prevOnboardingSlide()" class="btn-secondary flex items-center gap-2">
+                            <span class="text-xl">←</span> Back
                         </button>
-                        <button onclick="nextOnboardingSlide()" class="btn-glow text-white px-6 py-3 rounded-full font-semibold flex items-center">
-                            Next <span class="icon icon-arrow-right ml-2"></span>
+                        <button onclick="nextOnboardingSlide()" class="btn-primary flex items-center gap-3">
+                            Next <span class="text-xl">→</span>
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Slide 3 -->
-            <div class="onboarding-slide flex flex-col h-screen p-6">
+            <!-- Slide 3: Seamless Recharging -->
+            <div class="onboarding-slide flex flex-col h-screen p-6 bg-gradient-to-br from-darkBg via-darkCard to-secondary-900">
                 <div class="flex-1 flex flex-col items-center justify-center text-center">
-                    <div class="w-64 h-64 mb-8 flex items-center justify-center text-8xl animate-bounce">💳</div>
-                    <h2 class="text-3xl font-bold bg-gradient-aurora bg-clip-text text-transparent mb-4">Seamless Recharging</h2>
-                    <p class="text-lg text-gray-300 leading-relaxed max-w-sm">Top up instantly with EcoCash & OneMoney integration and instant token delivery</p>
+                    <div class="w-72 h-72 mb-8 flex items-center justify-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-600/20 rounded-full animate-pulse"></div>
+                        <div class="relative text-9xl">💳</div>
+                    </div>
+                    <h2 class="text-4xl font-bold bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent mb-6">Seamless Recharging</h2>
+                    <p class="text-xl text-gray-300 leading-relaxed max-w-sm px-4">Top up instantly with EcoCash & OneMoney integration and instant token delivery</p>
                 </div>
                 <div class="flex justify-between items-center">
                     <div class="flex space-x-2">
-                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
-                        <div class="w-2 h-2 bg-gray-600 rounded-full"></div>
-                        <div class="w-8 h-2 bg-gradient-aurora rounded-full"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot active"></div>
+                        <div class="progress-dot"></div>
                     </div>
-                    <div class="flex gap-3">
-                        <button onclick="prevOnboardingSlide()" class="glass-card px-4 py-3 rounded-full font-semibold flex items-center text-gray-300">
-                            <span class="icon icon-arrow-left mr-2"></span> Back
+                    <div class="flex gap-4">
+                        <button onclick="prevOnboardingSlide()" class="btn-secondary flex items-center gap-2">
+                            <span class="text-xl">←</span> Back
                         </button>
-                        <button onclick="completeOnboarding()" class="btn-glow text-white px-6 py-3 rounded-full font-semibold flex items-center">
-                            Get Started <span class="icon icon-check ml-2"></span>
+                        <button onclick="nextOnboardingSlide()" class="btn-primary flex items-center gap-3">
+                            Next <span class="text-xl">→</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Device Setup -->
+            <div class="onboarding-slide flex flex-col h-screen p-6 bg-gradient-to-br from-darkBg via-darkCard to-green-900">
+                <div class="flex-1 flex flex-col justify-center">
+                    <div class="text-center mb-8">
+                        <div class="w-32 h-32 mx-auto mb-6 flex items-center justify-center relative">
+                            <div class="absolute inset-0 bg-gradient-to-br from-green-400/20 to-green-600/20 rounded-full animate-pulse"></div>
+                            <div class="relative text-6xl">⚡</div>
+                        </div>
+                        <h2 class="text-3xl font-bold bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent mb-4">Setup Your Devices</h2>
+                        <p class="text-lg text-gray-300 mb-8">Help us understand your energy usage by adding your household devices</p>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="glass-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-xl flex items-center justify-center mr-4">
+                                        <span class="text-white text-xl">🔥</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">Water Heater</h4>
+                                        <p class="text-sm text-gray-400">High consumption device</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="device-checkbox sr-only peer" data-device="water-heater">
+                                    <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center mr-4">
+                                        <span class="text-white text-xl">❄️</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">Refrigerator</h4>
+                                        <p class="text-sm text-gray-400">Continuous operation</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="device-checkbox sr-only peer" data-device="refrigerator">
+                                    <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center mr-4">
+                                        <span class="text-white text-xl">📺</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">TV & Entertainment</h4>
+                                        <p class="text-sm text-gray-400">Moderate usage</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="device-checkbox sr-only peer" data-device="tv">
+                                    <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center mr-4">
+                                        <span class="text-white text-xl">💡</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">Lighting</h4>
+                                        <p class="text-sm text-gray-400">LED bulbs recommended</p>
+                                    </div>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="device-checkbox sr-only peer" data-device="lighting">
+                                    <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-2">
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot"></div>
+                        <div class="progress-dot active"></div>
+                    </div>
+                    <div class="flex gap-4">
+                        <button onclick="prevOnboardingSlide()" class="btn-secondary flex items-center gap-2">
+                            <span class="text-xl">←</span> Back
+                        </button>
+                        <button onclick="completeOnboarding()" class="btn-primary flex items-center gap-3">
+                            Get Started <span class="text-xl">🚀</span>
                         </button>
                     </div>
                 </div>
@@ -264,27 +340,27 @@
         <div id="auth-screen" class="screen min-h-screen flex flex-col p-6">
             <div class="flex-1 flex flex-col justify-center">
                 <div class="text-center mb-8">
-                    <div class="splash-logo w-20 h-20 mx-auto mb-6">
-                        <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center animate-pulse">
+                        <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
                         </svg>
                     </div>
-                    <h1 class="text-4xl font-bold bg-gradient-aurora bg-clip-text text-transparent mb-2">Welcome to EcoWatt</h1>
+                    <h1 class="text-4xl font-bold bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent mb-2">Welcome to EcoWatt</h1>
                     <p class="text-lg text-gray-300">Smart energy management for Zimbabwe</p>
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl mb-6">
+                <div class="glass-card p-6 mb-6">
                     <div class="mb-6">
                         <label class="block text-sm font-semibold text-gray-300 mb-3">Phone Number</label>
                         <div class="flex">
-                            <div class="glass-card border-r-0 rounded-l-xl px-4 flex items-center">
+                            <div class="glass-card border-r-0 rounded-r-none px-4 flex items-center">
                                 <span class="text-gray-300 font-mono">+263</span>
                             </div>
-                            <input type="tel" id="phone-input" class="input-glow glass-card rounded-l-none border-l-0 flex-1 px-4 py-4 text-white placeholder-gray-400 font-mono" placeholder="77 123 4567">
+                            <input type="tel" id="phone-input" class="input-enhanced rounded-l-none border-l-0 flex-1" placeholder="77 123 4567">
                         </div>
                     </div>
-                    <button id="send-otp-btn" class="btn-glow text-white w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center">
-                        <span class="icon icon-phone mr-2"></span> Send Verification Code
+                    <button id="send-otp-btn" class="btn-primary w-full">
+                        <span class="mr-2">📱</span> Send Verification Code
                     </button>
                 </div>
             </div>
@@ -294,35 +370,35 @@
         <div id="otp-screen" class="screen min-h-screen flex flex-col p-6">
             <div class="flex items-center mb-8">
                 <button onclick="showScreen('auth-screen')" class="glass-card w-12 h-12 rounded-xl flex items-center justify-center mr-4">
-                    <span class="icon icon-arrow-left text-primary-500"></span>
+                    <span class="text-primary-400 text-xl">←</span>
                 </button>
-                <h1 class="text-2xl font-bold text-white">Verify Your Number</h1>
+                <h1 class="text-2xl font-bold">Verify Your Number</h1>
             </div>
 
             <div class="flex-1 flex flex-col justify-center">
                 <div class="text-center mb-8">
-                    <div class="w-24 h-24 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse-glow">
-                        <span class="icon icon-phone text-white" style="width: 2rem; height: 2rem;"></span>
+                    <div class="w-24 h-24 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+                        <span class="text-white text-2xl">📱</span>
                     </div>
-                    <h2 class="text-xl font-semibold text-white mb-2">Enter Verification Code</h2>
+                    <h2 class="text-xl font-semibold mb-2">Enter Verification Code</h2>
                     <p class="text-gray-300">We sent a 4-digit code to <br><strong class="text-primary-400">+263 77 123 4567</strong></p>
                 </div>
 
-                <div class="glass-card p-8 mb-8 rounded-2xl">
+                <div class="glass-card p-8 mb-8">
                     <div class="flex justify-center gap-4 mb-8">
-                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-glow font-mono">
-                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-glow font-mono">
-                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-glow font-mono">
-                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-glow font-mono">
+                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-enhanced">
+                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-enhanced">
+                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-enhanced">
+                        <input type="text" maxlength="1" class="otp-input w-16 h-20 text-center text-3xl font-bold rounded-xl border-2 border-gray-600 glass-card text-white input-enhanced">
                     </div>
-                    <button id="verify-otp-btn" class="btn-glow text-white w-full py-4 rounded-xl font-semibold text-lg flex items-center justify-center">
-                        <span class="icon icon-check mr-2"></span> Verify & Continue
+                    <button id="verify-otp-btn" class="btn-primary w-full">
+                        <span class="mr-2">✓</span> Verify & Continue
                     </button>
                 </div>
 
                 <div class="text-center">
                     <p class="text-gray-400 mb-2">Didn't receive the code?</p>
-                    <button class="text-primary-400 font-semibold hover:text-primary-300">Resend Code (00:45)</button>
+                    <button class="text-primary-400 font-semibold">Resend Code (00:45)</button>
                 </div>
             </div>
         </div>
@@ -332,43 +408,44 @@
             <!-- Header -->
             <header class="px-6 py-4 flex justify-between items-center mb-6">
                 <div class="flex items-center">
-                    <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-4 animate-pulse-glow">
+                    <div class="w-14 h-14 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center mr-4 animate-pulse">
                         <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"></path>
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold text-white">EcoWatt</h1>
+                        <h1 class="text-xl font-bold">EcoWatt</h1>
                         <p class="text-sm text-gray-400 font-medium">Good morning, User</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
                     <button id="connect-btn" class="glass-card px-3 py-2 text-sm rounded-lg font-semibold text-gray-300 flex items-center">
-                        <span class="icon icon-bluetooth mr-1" style="width: 1rem; height: 1rem;"></span> Connect
+                        <span class="mr-1">📶</span> Connect
                     </button>
                     <button class="relative">
                         <div class="glass-card w-12 h-12 rounded-xl flex items-center justify-center">
-                            <span class="icon icon-bell text-gray-300"></span>
+                            <span class="text-gray-300 text-xl">🔔</span>
                         </div>
-                        <span class="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-neonPink to-neonPurple rounded-full flex items-center justify-center text-xs font-bold text-white animate-pulse-glow">3</span>
+                        <span class="absolute -top-1 -right-1 w-6 h-6 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center text-xs font-bold text-white animate-pulse">3</span>
                     </button>
                 </div>
             </header>
 
             <!-- Energy Balance Card -->
             <div class="px-6 mb-6">
-                <div class="glass-card p-6 rounded-2xl">
+                <div class="glass-card p-6">
                     <div class="text-center mb-6">
                         <h2 class="text-lg font-semibold text-gray-300 mb-2">Current Balance</h2>
                         
-                        <!-- Energy Meter -->
-                        <div class="my-8 relative flex items-center justify-center">
-                            <svg viewBox="0 0 200 200" class="w-52 h-52">
+                        <!-- Enhanced Energy Meter -->
+                        <div class="energy-meter">
+                            <div class="meter-glow"></div>
+                            <svg viewBox="0 0 200 200" class="w-full h-full relative z-10">
                                 <defs>
                                     <linearGradient id="meter-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" style="stop-color:#00FFFF"></stop>
-                                        <stop offset="50%" style="stop-color:#FF0080"></stop>
-                                        <stop offset="100%" style="stop-color:#8000FF"></stop>
+                                        <stop offset="0%" style="stop-color:#22c55e"></stop>
+                                        <stop offset="50%" style="stop-color:#8b5cf6"></stop>
+                                        <stop offset="100%" style="stop-color:#f59e0b"></stop>
                                     </linearGradient>
                                     <filter id="glow">
                                         <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
@@ -381,7 +458,7 @@
                                         stroke-linecap="round" filter="url(#glow)"></circle>
                                 
                                 <text x="100" y="85" text-anchor="middle" font-size="32" font-weight="bold" fill="white" font-family="monospace">8.42</text>
-                                <text x="100" y="105" text-anchor="middle" font-size="14" fill="#00FFFF">kWh</text>
+                                <text x="100" y="105" text-anchor="middle" font-size="14" fill="#22c55e">kWh</text>
                                 <text x="100" y="125" text-anchor="middle" font-size="12" fill="#888">remaining</text>
                             </svg>
                         </div>
@@ -389,7 +466,7 @@
                         <div class="flex items-center justify-center">
                             <div class="glass-card px-4 py-2 rounded-full border border-secondary-500/30">
                                 <p class="text-secondary-400 font-semibold flex items-center">
-                                    <span class="icon icon-clock mr-2" style="width: 1rem; height: 1rem;"></span> 
+                                    <span class="mr-2">⏰</span> 
                                     Est. <span class="mx-1 font-bold text-secondary-300">3 days</span> remaining
                                 </p>
                             </div>
@@ -401,11 +478,11 @@
             <!-- Quick Actions -->
             <div class="px-6 mb-6">
                 <div class="flex gap-3">
-                    <button id="show-recharge-btn" class="btn-glow text-white flex-1 py-4 rounded-xl font-semibold flex items-center justify-center">
-                        <span class="icon icon-bolt mr-2"></span> Recharge Now
+                    <button id="show-recharge-btn" class="btn-primary flex-1">
+                        <span class="mr-2">⚡</span> Recharge Now
                     </button>
                     <button id="emergency-credit-btn" class="glass-card px-4 py-4 rounded-xl border-red-500/30 hover:bg-red-500/20">
-                        <span class="icon icon-warning text-red-400"></span>
+                        <span class="text-red-400 text-xl">⚠️</span>
                     </button>
                 </div>
             </div>
@@ -413,36 +490,36 @@
             <!-- Dashboard Cards -->
             <div class="px-6 mb-6">
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="glass-card p-4 rounded-xl">
+                    <div class="glass-card p-4">
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="text-sm font-semibold text-gray-300">Today's Usage</h3>
                             <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                                <span class="icon icon-chart text-white"></span>
+                                <span class="text-white text-xl">📊</span>
                             </div>
                         </div>
                         <div class="flex items-baseline mb-2">
                             <span class="text-2xl font-bold text-white font-mono">1.2</span>
                             <span class="text-sm text-gray-400 ml-1">kWh</span>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 35%"></div>
+                        <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full transition-all duration-1000 ease-out" style="width: 35%"></div>
                         </div>
                         <p class="text-xs text-gray-400 mt-2">35% of daily average</p>
                     </div>
 
-                    <div class="glass-card p-4 rounded-xl">
+                    <div class="glass-card p-4">
                         <div class="flex items-center justify-between mb-3">
                             <h3 class="text-sm font-semibold text-gray-300">Monthly Budget</h3>
                             <div class="w-10 h-10 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-lg flex items-center justify-center">
-                                <span class="icon icon-wallet text-white"></span>
+                                <span class="text-white text-xl">💳</span>
                             </div>
                         </div>
                         <div class="flex items-baseline mb-2">
                             <span class="text-2xl font-bold text-white font-mono">$25</span>
                             <span class="text-sm text-gray-400 ml-1">ZWL</span>
                         </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 70%"></div>
+                        <div class="w-full bg-gray-800 rounded-full h-2 overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-secondary-500 to-yellow-400 rounded-full transition-all duration-1000 ease-out" style="width: 70%"></div>
                         </div>
                         <p class="text-xs text-gray-400 mt-2">$17.50 remaining</p>
                     </div>
@@ -451,10 +528,10 @@
 
             <!-- Alert Section -->
             <div class="px-6 mb-6">
-                <div class="glass-card bg-gradient-to-r from-secondary-500/20 to-orange-500/20 border-l-4 border-secondary-500 p-4 rounded-xl">
+                <div class="glass-card bg-gradient-to-r from-secondary-500/20 to-orange-500/20 border-l-4 border-secondary-500 p-4">
                     <div class="flex items-start">
-                        <div class="w-12 h-12 bg-secondary-500 rounded-xl flex items-center justify-center mr-3 animate-pulse-glow">
-                            <span class="icon icon-warning text-white"></span>
+                        <div class="w-12 h-12 bg-secondary-500 rounded-xl flex items-center justify-center mr-3 animate-pulse">
+                            <span class="text-white text-xl">⚠️</span>
                         </div>
                         <div>
                             <h3 class="font-semibold text-secondary-300 mb-1">Low Balance Alert</h3>
@@ -467,36 +544,138 @@
 
             <!-- Quick Actions Grid -->
             <div class="px-6 mb-6">
-                <h2 class="text-lg font-semibold text-white mb-4">Quick Actions</h2>
+                <h2 class="text-lg font-semibold mb-4">Quick Actions</h2>
                 <div class="grid grid-cols-4 gap-3">
-                    <button class="glass-card flex flex-col items-center py-4 px-2 rounded-xl">
+                    <button id="show-forecast-btn" class="glass-card flex flex-col items-center py-4 px-2">
                         <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center mb-2">
-                            <span class="icon icon-chart text-white"></span>
+                            <span class="text-white text-xl">📈</span>
                         </div>
                         <span class="text-xs text-center text-gray-300 font-medium">Forecast</span>
                     </button>
 
-                    <button class="glass-card flex flex-col items-center py-4 px-2 rounded-xl">
+                    <button id="show-budget-btn" class="glass-card flex flex-col items-center py-4 px-2">
                         <div class="w-12 h-12 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-xl flex items-center justify-center mb-2">
-                            <span class="icon icon-wallet text-white"></span>
+                            <span class="text-white text-xl">💳</span>
                         </div>
                         <span class="text-xs text-center text-gray-300 font-medium">Budget</span>
                     </button>
 
-                    <button class="glass-card flex flex-col items-center py-4 px-2 rounded-xl">
+                    <button id="show-devices-btn" class="glass-card flex flex-col items-center py-4 px-2">
                         <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-2">
-                            <span class="icon icon-bolt text-white"></span>
+                            <span class="text-white text-xl">⚡</span>
                         </div>
                         <span class="text-xs text-center text-gray-300 font-medium">Devices</span>
                     </button>
 
-                    <button class="glass-card flex flex-col items-center py-4 px-2 rounded-xl">
-                        <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center mb-2">
-                            <span class="icon icon-warning text-white"></span>
+                    <button id="show-settings-btn" class="glass-card flex flex-col items-center py-4 px-2">
+                        <div class="w-12 h-12 bg-gradient-to-br from-gray-500 to-gray-600 rounded-xl flex items-center justify-center mb-2">
+                            <span class="text-white text-xl">⚙️</span>
                         </div>
-                        <span class="text-xs text-center text-gray-300 font-medium">Report</span>
+                        <span class="text-xs text-center text-gray-300 font-medium">Settings</span>
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <!-- Usage/Forecast Screen -->
+        <div id="usage-screen" class="screen p-6 pb-24">
+            <div class="flex items-center mb-6">
+                <button onclick="showScreen('home-screen')" class="glass-card w-12 h-12 rounded-xl flex items-center justify-center mr-4">
+                    <span class="text-primary-400 text-xl">←</span>
+                </button>
+                <h1 class="text-2xl font-bold">Usage Analytics</h1>
+            </div>
+
+            <div class="glass-card p-6 mb-6">
+                <h2 class="text-lg font-semibold mb-4">7-Day Forecast</h2>
+                <div class="bg-gray-800/50 rounded-xl p-4 h-48 flex items-center justify-center">
+                    <p class="text-gray-400">📊 Interactive usage chart would go here</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="glass-card p-4">
+                    <h3 class="text-sm font-semibold text-gray-300 mb-2">Daily Average</h3>
+                    <div class="text-2xl font-bold text-primary-400">2.3 kWh</div>
+                </div>
+                <div class="glass-card p-4">
+                    <h3 class="text-sm font-semibold text-gray-300 mb-2">This Month</h3>
+                    <div class="text-2xl font-bold text-secondary-400">68 kWh</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Screen -->
+        <div id="budget-screen" class="screen p-6 pb-24">
+            <div class="flex items-center mb-6">
+                <button onclick="showScreen('home-screen')" class="glass-card w-12 h-12 rounded-xl flex items-center justify-center mr-4">
+                    <span class="text-primary-400 text-xl">←</span>
+                </button>
+                <h1 class="text-2xl font-bold">Budget Management</h1>
+            </div>
+
+            <div class="glass-card p-6 mb-6">
+                <h2 class="text-lg font-semibold mb-4">Monthly Budget</h2>
+                <div class="mb-4">
+                    <div class="flex justify-between mb-2">
+                        <span>Current: $32.50 ZWL</span>
+                        <span>Target: $50 ZWL</span>
+                    </div>
+                    <div class="w-full bg-gray-800 rounded-full h-3">
+                        <div class="bg-gradient-to-r from-primary-500 to-primary-600 h-3 rounded-full" style="width: 65%"></div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-400">You're on track to meet your monthly budget</p>
+            </div>
+        </div>
+
+        <!-- Devices Screen -->
+        <div id="devices-screen" class="screen p-6 pb-24">
+            <div class="flex items-center mb-6">
+                <button onclick="showScreen('home-screen')" class="glass-card w-12 h-12 rounded-xl flex items-center justify-center mr-4">
+                    <span class="text-primary-400 text-xl">←</span>
+                </button>
+                <h1 class="text-2xl font-bold">Household Devices</h1>
+            </div>
+
+            <div id="devices-list" class="space-y-4 mb-6">
+                <!-- Devices will be populated by JavaScript based on onboarding selections -->
+            </div>
+
+            <button class="btn-primary w-full">
+                <span class="mr-2">➕</span> Add New Device
+            </button>
+        </div>
+
+        <!-- Settings Screen -->
+        <div id="settings-screen" class="screen p-6 pb-24">
+            <div class="flex items-center mb-6">
+                <button onclick="showScreen('home-screen')" class="glass-card w-12 h-12 rounded-xl flex items-center justify-center mr-4">
+                    <span class="text-primary-400 text-xl">←</span>
+                </button>
+                <h1 class="text-2xl font-bold">Settings</h1>
+            </div>
+
+            <div class="space-y-4">
+                <div class="glass-card p-4">
+                    <h3 class="font-semibold mb-2">Account</h3>
+                    <p class="text-gray-400">+263 77 123 4567</p>
+                </div>
+
+                <div class="glass-card p-4">
+                    <h3 class="font-semibold mb-2">Notifications</h3>
+                    <div class="flex items-center justify-between">
+                        <span>Push Notifications</span>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" checked class="sr-only peer">
+                            <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="glass-card p-4 w-full text-left">
+                    <h3 class="font-semibold text-red-400">Logout</h3>
+                </button>
             </div>
         </div>
 
@@ -505,19 +684,19 @@
             <div class="px-4 py-2">
                 <div class="flex justify-between">
                     <button id="nav-home" class="nav-item active flex flex-col items-center py-3 px-4">
-                        <span class="icon icon-home"></span>
+                        <span class="text-xl">🏠</span>
                         <span class="text-xs mt-1 font-medium">Home</span>
                     </button>
-                    <button class="nav-item flex flex-col items-center py-3 px-4 text-gray-400">
-                        <span class="icon icon-chart"></span>
+                    <button id="nav-usage" class="nav-item flex flex-col items-center py-3 px-4">
+                        <span class="text-xl">📊</span>
                         <span class="text-xs mt-1 font-medium">Usage</span>
                     </button>
-                    <button class="nav-item flex flex-col items-center py-3 px-4 text-gray-400">
-                        <span class="icon icon-wallet"></span>
+                    <button id="nav-budget" class="nav-item flex flex-col items-center py-3 px-4">
+                        <span class="text-xl">💳</span>
                         <span class="text-xs mt-1 font-medium">Budget</span>
                     </button>
-                    <button class="nav-item flex flex-col items-center py-3 px-4 text-gray-400">
-                        <span class="icon icon-user"></span>
+                    <button id="nav-profile" class="nav-item flex flex-col items-center py-3 px-4">
+                        <span class="text-xl">👤</span>
                         <span class="text-xs mt-1 font-medium">Profile</span>
                     </button>
                 </div>
@@ -530,40 +709,25 @@
 
     <!-- JavaScript -->
     <script>
-        console.log('🚀 EcoWatt PWA v2.0 - Mobile-First Professional Edition');
+        console.log('🚀 EcoWatt PWA - Professional Edition Starting...');
 
         class EcoWattApp {
             constructor() {
-                this.currentScreen = 'splash';
+                this.currentScreen = 'onboarding';
                 this.currentSlide = 0;
                 this.isFirstTime = !localStorage.getItem('ecowatt_onboarded');
+                this.selectedDevices = [];
                 console.log('✅ EcoWatt Professional App Initialized');
                 this.init();
             }
 
             init() {
-                console.log('🔧 Initializing mobile-first app...');
-                this.setupSplashScreen();
+                console.log('🔧 Initializing professional app...');
                 this.setupEventListeners();
-                this.setupPWA();
-            }
-
-            setupSplashScreen() {
-                console.log('🎬 Setting up splash screen...');
-                const splash = document.getElementById('splashScreen');
-                if (splash) {
-                    setTimeout(() => {
-                        splash.classList.add('fade-out');
-                        setTimeout(() => {
-                            splash.style.display = 'none';
-                            this.checkFirstTime();
-                        }, 800);
-                    }, 3000);
-                }
+                this.checkFirstTime();
             }
 
             checkFirstTime() {
-                console.log('🔍 Checking first time user...');
                 if (this.isFirstTime) {
                     this.showOnboarding();
                 } else {
@@ -572,7 +736,7 @@
             }
 
             showOnboarding() {
-                console.log('👋 Showing onboarding...');
+                console.log('👋 Showing professional onboarding...');
                 const onboarding = document.getElementById('onboarding-container');
                 if (onboarding) {
                     onboarding.classList.add('active');
@@ -606,18 +770,25 @@
                 const navItems = document.querySelectorAll('.nav-item');
                 navItems.forEach(item => item.classList.remove('active'));
                 
-                if (screenId === 'home-screen') {
-                    document.getElementById('nav-home').classList.add('active');
+                const navMap = {
+                    'home-screen': 'nav-home',
+                    'usage-screen': 'nav-usage', 
+                    'budget-screen': 'nav-budget',
+                    'settings-screen': 'nav-profile'
+                };
+
+                if (navMap[screenId]) {
+                    document.getElementById(navMap[screenId]).classList.add('active');
                 }
             }
 
             setupEventListeners() {
                 console.log('🎧 Setting up event listeners...');
                 
+                // Auth flow
                 const sendOtpBtn = document.getElementById('send-otp-btn');
                 if (sendOtpBtn) {
                     sendOtpBtn.addEventListener('click', () => {
-                        console.log('📱 Send OTP clicked');
                         this.showScreen('otp-screen');
                         this.showToast('Verification code sent!', 'success');
                     });
@@ -626,30 +797,50 @@
                 const verifyOtpBtn = document.getElementById('verify-otp-btn');
                 if (verifyOtpBtn) {
                     verifyOtpBtn.addEventListener('click', () => {
-                        console.log('✅ Verify OTP clicked');
                         localStorage.setItem('ecowatt_onboarded', 'true');
                         this.showScreen('home-screen');
                         this.showToast('Welcome to EcoWatt!', 'success');
                     });
                 }
 
-                const navHome = document.getElementById('nav-home');
-                if (navHome) {
-                    navHome.addEventListener('click', () => {
-                        console.log('🏠 Home navigation clicked');
-                        this.showScreen('home-screen');
-                    });
-                }
+                // Navigation
+                const navMap = {
+                    'nav-home': 'home-screen',
+                    'nav-usage': 'usage-screen',
+                    'nav-budget': 'budget-screen', 
+                    'nav-profile': 'settings-screen'
+                };
 
-                const rechargeBtn = document.getElementById('show-recharge-btn');
-                if (rechargeBtn) {
-                    rechargeBtn.addEventListener('click', () => {
-                        console.log('⚡ Recharge button clicked');
-                        this.showToast('🚀 Recharge feature coming soon!\n\n✅ EcoCash integration\n✅ OneMoney support\n✅ Instant token delivery', 'info', 4000);
-                    });
-                }
+                Object.keys(navMap).forEach(navId => {
+                    const navBtn = document.getElementById(navId);
+                    if (navBtn) {
+                        navBtn.addEventListener('click', () => {
+                            this.showScreen(navMap[navId]);
+                        });
+                    }
+                });
 
+                // Quick actions
+                const quickActions = {
+                    'show-recharge-btn': () => this.showToast('🚀 Recharge feature coming soon!\n\n✅ EcoCash integration\n✅ OneMoney support\n✅ Instant token delivery', 'info', 4000),
+                    'show-forecast-btn': () => this.showScreen('usage-screen'),
+                    'show-budget-btn': () => this.showScreen('budget-screen'),
+                    'show-devices-btn': () => this.showScreen('devices-screen'),
+                    'show-settings-btn': () => this.showScreen('settings-screen')
+                };
+
+                Object.keys(quickActions).forEach(btnId => {
+                    const btn = document.getElementById(btnId);
+                    if (btn) {
+                        btn.addEventListener('click', quickActions[btnId]);
+                    }
+                });
+
+                // OTP inputs
                 this.setupOTPInputs();
+
+                // Device selection
+                this.setupDeviceSelection();
             }
 
             setupOTPInputs() {
@@ -678,18 +869,64 @@
                 });
             }
 
-            setupPWA() {
-                console.log('📱 Setting up PWA features...');
-                
-                if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('./sw.js')
-                        .then(reg => console.log('✅ SW registered:', reg))
-                        .catch(err => console.log('⚠️ SW registration failed:', err));
+            setupDeviceSelection() {
+                const deviceCheckboxes = document.querySelectorAll('.device-checkbox');
+                deviceCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', (e) => {
+                        const device = e.target.dataset.device;
+                        if (e.target.checked) {
+                            if (!this.selectedDevices.includes(device)) {
+                                this.selectedDevices.push(device);
+                            }
+                        } else {
+                            this.selectedDevices = this.selectedDevices.filter(d => d !== device);
+                        }
+                        console.log('Selected devices:', this.selectedDevices);
+                    });
+                });
+            }
+
+            populateDevicesScreen() {
+                const devicesList = document.getElementById('devices-list');
+                if (!devicesList) return;
+
+                const deviceData = {
+                    'water-heater': { name: 'Water Heater', icon: '🔥', consumption: '2.4 kWh/day', color: 'from-red-400 to-red-600' },
+                    'refrigerator': { name: 'Refrigerator', icon: '❄️', consumption: '1.5 kWh/day', color: 'from-blue-400 to-blue-600' },
+                    'tv': { name: 'TV & Entertainment', icon: '📺', consumption: '0.8 kWh/day', color: 'from-purple-400 to-purple-600' },
+                    'lighting': { name: 'Lighting', icon: '💡', consumption: '0.5 kWh/day', color: 'from-yellow-400 to-yellow-600' }
+                };
+
+                devicesList.innerHTML = '';
+                this.selectedDevices.forEach(device => {
+                    const data = deviceData[device];
+                    if (data) {
+                        const deviceCard = document.createElement('div');
+                        deviceCard.className = 'device-card';
+                        deviceCard.innerHTML = `
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-gradient-to-br ${data.color} rounded-xl flex items-center justify-center mr-4">
+                                        <span class="text-white text-xl">${data.icon}</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold">${data.name}</h4>
+                                        <p class="text-sm text-gray-400">${data.consumption}</p>
+                                    </div>
+                                </div>
+                                <button class="glass-card px-3 py-2 rounded-lg text-sm">Manage</button>
+                            </div>
+                        `;
+                        devicesList.appendChild(deviceCard);
+                    }
+                });
+
+                if (this.selectedDevices.length === 0) {
+                    devicesList.innerHTML = '<div class="glass-card p-6 text-center"><p class="text-gray-400">No devices configured yet</p></div>';
                 }
             }
 
             showToast(message, type = 'info', duration = 3000) {
-                console.log('🍞 Toast:', message);
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
                 toast.innerHTML = `
@@ -724,8 +961,8 @@
 
         window.nextOnboardingSlide = function() {
             console.log('➡️ Next slide');
-            if (currentSlide < 2) {
-                const slides = document.querySelectorAll('.onboarding-slide');
+            const slides = document.querySelectorAll('.onboarding-slide');
+            if (currentSlide < slides.length - 1) {
                 slides[currentSlide].classList.remove('active');
                 currentSlide++;
                 slides[currentSlide].classList.add('active');
@@ -734,8 +971,8 @@
 
         window.prevOnboardingSlide = function() {
             console.log('⬅️ Previous slide');
+            const slides = document.querySelectorAll('.onboarding-slide');
             if (currentSlide > 0) {
-                const slides = document.querySelectorAll('.onboarding-slide');
                 slides[currentSlide].classList.remove('active');
                 currentSlide--;
                 slides[currentSlide].classList.add('active');
@@ -745,6 +982,7 @@
         window.completeOnboarding = function() {
             console.log('🎉 Onboarding completed');
             localStorage.setItem('ecowatt_onboarded', 'true');
+            window.ecoWattApp.populateDevicesScreen();
             window.ecoWattApp.showScreen('auth-screen');
         };
 
@@ -756,28 +994,17 @@
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 DOM Content Loaded - Starting Mobile-First EcoWatt PWA...');
+            console.log('🚀 DOM Content Loaded - Starting Professional EcoWatt PWA...');
             
             try {
                 window.ecoWattApp = new EcoWattApp();
-                console.log('✅ EcoWatt Mobile-First PWA Initialized Successfully');
+                console.log('✅ EcoWatt Professional PWA Initialized Successfully');
             } catch (error) {
                 console.error('❌ Failed to initialize EcoWatt PWA:', error);
-                document.body.innerHTML = `
-                    <div class="min-h-screen flex items-center justify-center bg-darkBg text-white text-center p-6">
-                        <div class="glass-card p-8 rounded-2xl max-w-sm">
-                            <h1 class="text-2xl font-bold text-red-400 mb-4">⚠️ Loading Error</h1>
-                            <p class="text-gray-300 mb-6">The app encountered an issue.</p>
-                            <button onclick="window.location.reload()" class="btn-glow text-white px-6 py-3 rounded-xl font-semibold">
-                                🔄 Reload App
-                            </button>
-                        </div>
-                    </div>
-                `;
             }
         });
 
-        console.log('📝 EcoWatt Mobile-First PWA script loaded successfully');
+        console.log('📝 EcoWatt Professional PWA script loaded successfully');
     </script>
 </body>
 </html>
