@@ -39,7 +39,6 @@
 3. Enjoy native app experience with offline support!
 
 ### 💻 Local Development:
-```bash
 
 # Clone repository
 git clone https://github.com/CBfrost/ecowatt-energy-platform.git
@@ -198,7 +197,6 @@ Interested in licensing EcoWatt for your organization?
 - **Revenue Model:** SaaS, transaction fees, enterprise licenses
 
 ### 📄 **CHANGELOG.md**
-```markdown
 # Changelog
 
 All notable changes to EcoWatt will be documented in this file.
